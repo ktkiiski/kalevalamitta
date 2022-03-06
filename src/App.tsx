@@ -1,21 +1,18 @@
-import { SyntheticEvent, useRef } from "react";
-import "./App.css";
+import { SyntheticEvent, useRef } from 'react';
+import './App.css';
 
-const preservedNodeNames = ["DIV", "BR"];
+const preservedNodeNames = ['DIV', 'BR'];
 
 function sanitize(element: ChildNode) {
   const parent = element.parentNode;
   let child = element.firstChild;
   while (child) {
     const nextChild = child.nextSibling;
-    if (parent && element.nodeName !== "DIV") {
+    if (parent && element.nodeName !== 'DIV') {
       parent.insertBefore(child, element);
     }
     sanitize(child);
-    if (
-      child.nodeType === Node.ELEMENT_NODE &&
-      !preservedNodeNames.includes(child.nodeName)
-    ) {
+    if (child.nodeType === Node.ELEMENT_NODE && !preservedNodeNames.includes(child.nodeName)) {
       element.removeChild(child);
     }
     child = nextChild;
@@ -32,7 +29,7 @@ function App() {
       <header className="App-header">
         <h1>Kalevalamitta</h1>
         <div
-          style={{ backgroundColor: "black", minHeight: 100, minWidth: 100 }}
+          style={{ backgroundColor: 'black', minHeight: 100, minWidth: 100 }}
           contentEditable
           ref={contentEditableRef}
           onInput={onContentEditableChange}

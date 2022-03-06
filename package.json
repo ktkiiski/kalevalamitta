@@ -20,8 +20,11 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint . --ext .ts,.tsx && prettier --check .",
+    "lint:fix": "eslint . --ext .ts,.tsx --fix && prettier --write ."
   },
+  "prettier": "eslint-config-broilerplate/prettier.config",
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -39,5 +42,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint-config-broilerplate": "^3.0.0"
   }
 }
