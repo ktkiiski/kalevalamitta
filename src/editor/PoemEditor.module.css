@@ -1,0 +1,32 @@
+.container {
+  width: 300px;
+  height: 200px;
+  position: relative;
+  font-size: 1rem;
+  line-height: 1.25rem;
+  text-align: left;
+}
+.textarea,
+.highlighting {
+  font-family: inherit;
+  font-weight: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  border-style: none;
+  background: transparent;
+  padding: 0;
+}
+.textarea {
+  z-index: 0;
+  appearance: none;
+}
+.highlighting {
+  pointer-events: none;
+  z-index: 1;
+  color: red;
+}
