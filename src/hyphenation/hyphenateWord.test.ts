@@ -26,6 +26,15 @@ const hyphenations = [
   'myl-ly-ä',
   'nai-sel-li-suu-te-mat-to-muu-te-ni',
   'yk-sik-ses-kös',
+  'mie-le-ni',
+  'mi-nun',
+  'te-ke-vi',
+  'ai-vo-ni',
+  'a-jat-te-le-vi',
+  'läh-te-ä-ni',
+  'lau-la-ma-han',
+  // 'saa-\'a-ni',
+  'sa-ne-le-ma-han',
 ];
 describe('hyphenate', () => {
   hyphenations.forEach((hyphenatedWord) => {

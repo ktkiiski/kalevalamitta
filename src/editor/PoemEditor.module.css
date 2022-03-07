@@ -3,7 +3,8 @@
   height: 200px;
   position: relative;
   font-size: 1rem;
-  line-height: 1.25rem;
+  line-height: 1.5rem;
+  letter-spacing: 0.1rem;
   text-align: left;
 }
 .textarea,
@@ -12,6 +13,8 @@
   font-weight: inherit;
   font-size: inherit;
   line-height: inherit;
+  letter-spacing: inherit;
+  overflow: hidden;
   position: absolute;
   left: 0;
   top: 0;
@@ -19,14 +22,23 @@
   bottom: 0;
   border-style: none;
   background: transparent;
-  padding: 0;
+  padding: 0.1rem 0.5rem;
+  white-space: pre-wrap;
 }
 .textarea {
-  z-index: 0;
+  z-index: 1;
   appearance: none;
+  color: rgba(0, 0, 0, 0);
+  caret-color: white;
 }
 .highlighting {
+  z-index: 0;
   pointer-events: none;
-  z-index: 1;
-  color: red;
+  color: white;
+}
+.syllableToken.odd {
+  color: #ff7777;
+}
+.syllableToken.even {
+  color: #7777ff;
 }

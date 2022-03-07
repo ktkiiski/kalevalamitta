@@ -2,8 +2,13 @@ import { useState } from 'react';
 import './App.css';
 import PoemEditor from './editor/PoemEditor';
 
+const initialPoem = `Mieleni minun tekevi,
+Aivoni ajattelevi
+Lähteäni laulamahan
+Saa'ani sanelemahan.`;
+
 function App() {
-  const [poem, setPoem] = useState('');
+  const [poem, setPoem] = useState(initialPoem);
 
   return (
     <div className="App">
