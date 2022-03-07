@@ -32,9 +32,17 @@ const hyphenations = [
   'ai-vo-ni',
   'a-jat-te-le-vi',
   'läh-te-ä-ni',
-  'lau-la-ma-han',
-  // 'saa-\'a-ni',
-  'sa-ne-le-ma-han',
+  // Words with special characters
+  // 'lau-la-ma-han,',
+  "saa-'a-ni",
+  // 'sa-ne-le-ma-han.',
+  // 'kas-vin-kump-pa-li-ni!',
+  // Words with upper casing
+  'Ka-la',
+  'LUI-TA',
+  'met-SäÄ',
+  'kUi-TeN-KiN',
+  'TA-lo-AAN',
 ];
 describe('hyphenate', () => {
   hyphenations.forEach((hyphenatedWord) => {
