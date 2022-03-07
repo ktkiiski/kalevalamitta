@@ -1,6 +1,5 @@
 .container {
   width: 300px;
-  height: 200px;
   position: relative;
   font-size: 1rem;
   line-height: 1.5rem;
@@ -9,23 +8,25 @@
 }
 .textarea,
 .highlighting {
+  min-height: 200px;
+  box-sizing: border-box;
   font-family: inherit;
   font-weight: inherit;
   font-size: inherit;
   line-height: inherit;
   letter-spacing: inherit;
   overflow: hidden;
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
   border-style: none;
   background: transparent;
   padding: 0.1rem 0.5rem;
   white-space: pre-wrap;
 }
 .textarea {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
   z-index: 1;
   appearance: none;
   color: rgba(0, 0, 0, 0);

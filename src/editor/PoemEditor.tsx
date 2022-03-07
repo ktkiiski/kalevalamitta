@@ -1,4 +1,4 @@
-import { Fragment, VFC } from 'react';
+import { Fragment, useRef, VFC } from 'react';
 import hyphenateText from '../hyphenation/hyphenateText';
 import styles from './PoemEditor.module.css';
 
@@ -8,10 +8,13 @@ interface PoemEditorProps {
 }
 
 const PoemEditor: VFC<PoemEditorProps> = ({ content, onChange }) => {
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const hyphenation = hyphenateText(content);
+
   return (
     <div className={styles.container}>
       <textarea
+        ref={textareaRef}
         value={content}
         onChange={(event) => onChange(event.currentTarget.value)}
         className={styles.textarea}
