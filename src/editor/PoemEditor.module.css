@@ -1,9 +1,9 @@
 .container {
-  width: 300px;
+  width: 400px;
   position: relative;
   font-size: 1rem;
   line-height: 1.5rem;
-  letter-spacing: 0.1rem;
+  letter-spacing: 0.2rem;
   text-align: left;
 }
 .textarea,
@@ -36,6 +36,12 @@
   z-index: 0;
   pointer-events: none;
   color: white;
+}
+.trokee.odd {
+  background-color: transparent;
+}
+.trokee.even {
+  background-color: black;
 }
 .syllableToken.odd {
   color: #ff7777;
