@@ -1,5 +1,6 @@
+import classNames from 'classnames';
 import { Fragment, useRef, VFC } from 'react';
-import hyphenateText from '../hyphenation/hyphenateText';
+import hyphenateText from '../finnish/hyphenateText';
 import parseVerse from '../verses/parseVerse';
 import styles from './PoemEditor.module.css';
 
@@ -27,12 +28,19 @@ const PoemEditor: VFC<PoemEditorProps> = ({ content, onChange }) => {
           <Fragment key={row}>
             {row > 0 && '\n'}
             {trokees.map((trokee, trokeeIdx) => (
-              <span key={trokeeIdx} className={`${styles.trokee} ${trokeeIdx % 2 ? styles.odd : styles.even}`}>
+              <span key={trokeeIdx} className={classNames(styles.trokee, trokeeIdx % 2 ? styles.odd : styles.even)}>
                 {trokee.tokens.map((token, idx) =>
                   token.type === 'fill' ? (
                     token.text
                   ) : (
-                    <span key={idx} className={`${styles.syllableToken} ${token.index % 2 ? styles.odd : styles.even}`}>
+                    <span
+                      key={idx}
+                      className={classNames(
+                        styles.syllableToken,
+                        token.index % 2 ? styles.odd : styles.even,
+                        token.errors.length > 0 && styles.errorToken,
+                      )}
+                    >
                       {token.text}
                     </span>
                   ),

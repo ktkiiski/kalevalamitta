@@ -49,3 +49,6 @@
 .syllableToken.even {
   color: #7777ff;
 }
+.errorToken {
+  background-color: red;
+}

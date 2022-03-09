@@ -1,24 +1,22 @@
-const vowels = 'aeiouyäöä';
-const consonants = 'bcdfghjklmnpqrstvwxz';
-const diftongs = ['ai', 'ei', 'oi', 'äi', 'öi', 'ey', 'äy', 'öy', 'au', 'eu', 'ou', 'ui', 'yi', 'iu', 'iy'];
-const earlyDiftongs = ['ie', 'uo', 'yö'];
+import isConsonant from './isConsonant';
+import isDiftong from './isDiftong';
+import isVowel from './isVowel';
 
 function isSyllableSplit(prevChar: string, currentChar: string, nextChar: string, isFirst: boolean): boolean {
-  if (!consonants.includes(currentChar) && !vowels.includes(currentChar)) {
+  if (!isConsonant(currentChar) && !isVowel(currentChar)) {
     // This is not a regular letter
     return true;
   }
-  if (consonants.includes(currentChar) && vowels.includes(nextChar)) {
+  if (isConsonant(currentChar) && isVowel(nextChar)) {
     // Consonant followed by a vowel
     return true;
   }
-  if (vowels.includes(prevChar) && vowels.includes(currentChar)) {
+  if (isVowel(prevChar) && isVowel(currentChar)) {
     // A vowel followed by a vowel
     if (prevChar === currentChar) {
       return false;
     }
-    const diftong = prevChar + currentChar;
-    return !diftongs.includes(diftong) && (!isFirst || !earlyDiftongs.includes(diftong));
+    return !isDiftong(prevChar + currentChar, isFirst);
   }
   return false;
 }
