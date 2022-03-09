@@ -29,6 +29,8 @@ const verses = [
   'nuo-ruu/-es-ta/ van-huu/-es-ta',
   'pi-ti/ vii-kois/-ta py/-hyyt-tä',
   'hui-muus/ hurs-tin/ hul-pi/-loil-le',
+  // Verses breaking the additional rule 2
+  'Kolk-ko/-ja ko/-to-na/ näin {ma:2}',
   // Verses breaking the additional rule 4
   'saa-pui/ ker-ran/ kor-ven/ kolk-{kaan:4}',
   'suh-det/-tan-sa/ Suo-men/ luon-{toon:4}',

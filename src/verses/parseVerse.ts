@@ -36,12 +36,15 @@ export default function parseVerse(tokens: Token[]): Trokee[] {
   }
   // Validate the verse
   trokees.forEach(({ syllables }, trokeeIdx) => {
-    if (trokeeIdx > 0) {
-      syllables.forEach((syllable, syllableIndex) => {
-        if (syllable.beginsWord && syllable.endsWord) {
-          // Ignore one-syllable words
-          return;
+    const isLastTrokee = trokeeIdx === trokees.length - 1;
+    syllables.forEach((syllable, syllableIndex) => {
+      const isLastInVerse = isLastTrokee && syllableIndex === syllables.length - 1;
+      if (syllable.beginsWord && syllable.endsWord) {
+        // One-syllable word can be anywhere, except in the end
+        if (isLastInVerse) {
+          syllable.errors.push('2');
         }
+      } else if (trokeeIdx > 0) {
         const isFirst = syllableIndex === 0;
         const isLast = syllableIndex === syllables.length - 1;
         if (isFirst && syllable.beginsWord && isShortSyllable(syllable.text)) {
@@ -50,14 +53,11 @@ export default function parseVerse(tokens: Token[]): Trokee[] {
         if (isLast && syllable.beginsWord && !isShortSyllable(syllable.text)) {
           syllable.errors.push('B');
         }
-      });
-    }
-    if (trokeeIdx === trokees.length - 1) {
-      const lastSyllable = syllables[syllables.length - 1];
-      if (isLongVowelSyllable(lastSyllable.text)) {
-        lastSyllable.errors.push('4');
       }
-    }
+      if (isLastInVerse && isLongVowelSyllable(syllable.text)) {
+        syllable.errors.push('4');
+      }
+    });
   });
   return trokees;
 }
