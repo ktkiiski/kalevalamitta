@@ -24,6 +24,15 @@ const verses = [
   // Verses breaking the main rule B
   'syö-den/ sät-ki/-vää {jout:B}/-sen-ta',
   'se on/ sem-mo/-nen {hom:B}/-me-li',
+  // Verses that are exceptions to main rule A
+  'o-saa/ or-ja/-na e/-le-ä',
+  'nuo-ruu/-es-ta/ van-huu/-es-ta',
+  'pi-ti/ vii-kois/-ta py/-hyyt-tä',
+  'hui-muus/ hurs-tin/ hul-pi/-loil-le',
+  // Verses breaking the additional rule 4
+  'saa-pui/ ker-ran/ kor-ven/ kolk-{kaan:4}',
+  'suh-det/-tan-sa/ Suo-men/ luon-{toon:4}',
+  'tai-si/ muut-taa/ Lap-peen/-ran-{taan:4}',
 ];
 
 function parseVerseAsString(tokens: Token[]): string {

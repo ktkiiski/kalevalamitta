@@ -1,4 +1,5 @@
 import { FillToken, SyllableToken, Token } from '../finnish/hyphenateText';
+import isLongVowelSyllable from '../finnish/isLongVowelSyllable';
 import isShortSyllable from '../finnish/isShortSyllable';
 
 export interface Trokee {
@@ -34,15 +35,15 @@ export default function parseVerse(tokens: Token[]): Trokee[] {
     }
   }
   // Validate the verse
-  trokees.forEach((trokee, trokeeIdx) => {
+  trokees.forEach(({ syllables }, trokeeIdx) => {
     if (trokeeIdx > 0) {
-      trokee.syllables.forEach((syllable, syllableIndex) => {
+      syllables.forEach((syllable, syllableIndex) => {
         if (syllable.beginsWord && syllable.endsWord) {
           // Ignore one-syllable words
           return;
         }
         const isFirst = syllableIndex === 0;
-        const isLast = syllableIndex === trokee.syllables.length - 1;
+        const isLast = syllableIndex === syllables.length - 1;
         if (isFirst && syllable.beginsWord && isShortSyllable(syllable.text)) {
           syllable.errors.push('A');
         }
@@ -50,6 +51,12 @@ export default function parseVerse(tokens: Token[]): Trokee[] {
           syllable.errors.push('B');
         }
       });
+    }
+    if (trokeeIdx === trokees.length - 1) {
+      const lastSyllable = syllables[syllables.length - 1];
+      if (isLongVowelSyllable(lastSyllable.text)) {
+        lastSyllable.errors.push('4');
+      }
     }
   });
   return trokees;
