@@ -32,6 +32,48 @@ const hyphenations = [
   'ai-vo-ni',
   'a-jat-te-le-vi',
   'läh-te-ä-ni',
+  // CV
+  'ka-la',
+  'su-ku',
+  'ma-ta-la',
+  // CVC
+  'kas-tet-ta',
+  'ras-tas',
+  'mul-lat',
+  // CVV
+  'tuu-li',
+  'maa',
+  'sou-taa',
+  // CVVC
+  'kaar-re',
+  'liit-to',
+  'raus-ku',
+  'ry-tyyt-tää',
+  // VC
+  'us-ko',
+  'ok-sa',
+  'au-tu-as',
+  // V
+  'i-lo',
+  'o-sa',
+  'a-pe-a',
+  'yk-si-ö',
+  // VV
+  'aa-mu',
+  'uu-si',
+  'au-ke-aa',
+  'ai-to',
+  // CVCC
+  'kars-ki',
+  'vers-tas',
+  'lank-ku',
+  // VVC
+  'ais-ti',
+  'uit-taa',
+  'as-ti-aan',
+  // VCC
+  'irs-tas',
+  'urk-ki-a',
   // Words with special characters
   // 'lau-la-ma-han,',
   "saa-'a-ni",
