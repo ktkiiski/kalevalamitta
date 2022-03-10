@@ -3,6 +3,7 @@ import { Fragment, useRef, VFC } from 'react';
 import hyphenateText from '../finnish/hyphenateText';
 import parseVerse from '../verses/parseVerse';
 import styles from './PoemEditor.module.css';
+import VerseValidation from './VerseValidation';
 
 interface PoemEditorProps {
   content: string;
@@ -25,11 +26,11 @@ const PoemEditor: VFC<PoemEditorProps> = ({ content, onChange }) => {
           placeholder="Kirjoita tähän…"
         />
         <div className={styles.highlighting}>
-          {verses.map(({ trokees, syllableCount }, row) => (
+          {verses.map((verse, row) => (
             <Fragment key={row}>
               {row > 0 && '\n'}
-              <span className={styles.rowMargin}>{syllableCount}</span>
-              {trokees.map((trokee, trokeeIdx) => (
+              <VerseValidation verse={verse} className={styles.rowMargin} />
+              {verse.trokees.map((trokee, trokeeIdx) => (
                 <span key={trokeeIdx} className={classNames(styles.trokee, trokeeIdx % 2 ? styles.odd : styles.even)}>
                   {trokee.tokens.map((token, idx) =>
                     token.type === 'fill' ? (
