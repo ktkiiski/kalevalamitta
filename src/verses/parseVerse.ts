@@ -7,13 +7,18 @@ export interface Trokee {
   tokens: (FillToken | TrokeeSyllable)[];
 }
 
-export type VerseValidationError = 'A' | 'B' | '1' | '2' | '3' | '4';
+export type SyllableError = 'A' | 'B' | '1' | '2' | '3' | '4';
 
-interface TrokeeSyllable extends SyllableToken {
-  errors: VerseValidationError[];
+export interface Verse {
+  trokees: Trokee[];
+  syllableCount: number;
 }
 
-export default function parseVerse(tokens: Token[]): Trokee[] {
+interface TrokeeSyllable extends SyllableToken {
+  errors: SyllableError[];
+}
+
+export default function parseVerse(tokens: Token[]): Verse {
   const trokees: Trokee[] = [];
   for (let tokenIdx = tokens.length - 1; tokenIdx >= 0; tokenIdx -= 1) {
     const rawToken = tokens[tokenIdx];
@@ -35,12 +40,15 @@ export default function parseVerse(tokens: Token[]): Trokee[] {
     }
   }
   // Validate the verse
+  let syllableCount = 0;
   trokees.forEach(({ syllables }, trokeeIdx) => {
+    const trokeeSyllableCount = syllables.length;
+    syllableCount += trokeeSyllableCount;
     const isLastTrokee = trokeeIdx === trokees.length - 1;
     syllables.forEach((syllable, syllableIndex) => {
       const isFirstInTrokee = syllableIndex === 0;
-      const isLastInTrokee = syllableIndex === syllables.length - 1;
-      const isLastInVerse = isLastTrokee && syllableIndex === syllables.length - 1;
+      const isLastInTrokee = syllableIndex === trokeeSyllableCount - 1;
+      const isLastInVerse = isLastTrokee && syllableIndex === trokeeSyllableCount - 1;
       if (syllable.beginsWord && syllable.endsWord) {
         // Additional rule 2: one-syllable word can be anywhere, except in the end
         if (isLastInVerse) {
@@ -67,5 +75,5 @@ export default function parseVerse(tokens: Token[]): Trokee[] {
       }
     });
   });
-  return trokees;
+  return { trokees, syllableCount };
 }

@@ -47,7 +47,7 @@ const verses = [
 
 function parseVerseAsString(tokens: Token[]): string {
   const parsedVerse = parseVerse(tokens);
-  return parsedVerse
+  return parsedVerse.trokees
     .map((trokee) =>
       trokee.tokens
         .map((token) => {
