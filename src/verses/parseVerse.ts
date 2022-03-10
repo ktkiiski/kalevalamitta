@@ -38,22 +38,30 @@ export default function parseVerse(tokens: Token[]): Trokee[] {
   trokees.forEach(({ syllables }, trokeeIdx) => {
     const isLastTrokee = trokeeIdx === trokees.length - 1;
     syllables.forEach((syllable, syllableIndex) => {
+      const isFirstInTrokee = syllableIndex === 0;
+      const isLastInTrokee = syllableIndex === syllables.length - 1;
       const isLastInVerse = isLastTrokee && syllableIndex === syllables.length - 1;
       if (syllable.beginsWord && syllable.endsWord) {
-        // One-syllable word can be anywhere, except in the end
+        // Additional rule 2: one-syllable word can be anywhere, except in the end
         if (isLastInVerse) {
           syllable.errors.push('2');
         }
       } else if (trokeeIdx > 0) {
-        const isFirst = syllableIndex === 0;
-        const isLast = syllableIndex === syllables.length - 1;
-        if (isFirst && syllable.beginsWord && isShortSyllable(syllable.text)) {
+        // Additional rule 1: main rules do not affect the first trokee
+        // Main rule A
+        if (isFirstInTrokee && syllable.beginsWord && isShortSyllable(syllable.text)) {
           syllable.errors.push('A');
         }
-        if (isLast && syllable.beginsWord && !isShortSyllable(syllable.text)) {
+        // Main rule B
+        if (isLastInTrokee && syllable.beginsWord && !isShortSyllable(syllable.text)) {
           syllable.errors.push('B');
         }
       }
+      // Additional rule 3: "kesuura"
+      if (syllable.endsWord && syllable.index === 3 && isLastInTrokee && trokeeIdx === 2) {
+        syllable.errors.push('3');
+      }
+      // Additional rule 4: last syllable in the verse must be short
       if (isLastInVerse && isLongVowelSyllable(syllable.text)) {
         syllable.errors.push('4');
       }

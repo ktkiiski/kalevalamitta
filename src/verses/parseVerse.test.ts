@@ -16,6 +16,10 @@ const verses = [
   'Lu-van/ an-toi/ suu-ri/ luo-ja',
   'Pis-ti/ suit-set/ kul-lan/ suu-hun',
   'It-se/ tuon sa/-noik-si/ virk-ki.',
+  'tä-tä/ mies-tä/ nuo-rem/-pa-ta',
+  'lap-pa/-lai-nen/ lai-ha/ poi-ka',
+  'lai-ha/ poi-ka/ lap-pa/-lai-nen',
+  'pi-dä/ huol-ta/ it-ses/-tä-si.',
   // Verses breaking the main rule A
   'en-kä/ tie-dä/ {e:A}-män/-näs-tä',
   'ek-syy/ {u:A}-ni/-kal-li/-ol-le',
@@ -31,6 +35,10 @@ const verses = [
   'hui-muus/ hurs-tin/ hul-pi/-loil-le',
   // Verses breaking the additional rule 2
   'Kolk-ko/-ja ko/-to-na/ näin {ma:2}',
+  // Verses breaking the additional rule 3
+  'tä-tä/ nuo-rem/-pa-{ta:3}/ mies-tä',
+  'lai-ha/ lap-pa/-lai-{nen:3}/ poi-ka',
+  'pi-dä/ it-ses/-tä-{si:3}/ huol-ta',
   // Verses breaking the additional rule 4
   'saa-pui/ ker-ran/ kor-ven/ kolk-{kaan:4}',
   'suh-det/-tan-sa/ Suo-men/ luon-{toon:4}',
