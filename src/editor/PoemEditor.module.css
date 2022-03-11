@@ -10,9 +10,9 @@
   overflow: hidden;
 }
 .editor {
-  width: 400px;
   position: relative;
   overflow: visible;
+  flex-grow: 1;
 }
 .rightMargin {
   background-color: black;

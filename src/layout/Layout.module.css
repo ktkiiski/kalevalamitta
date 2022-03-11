@@ -5,13 +5,17 @@
 @value scrollShadeDark: #d6b079;
 @value scrollShadowColor: #bd9760;
 
+body {
+  margin: 0;
+  padding: 0;
+  background-color: pageBackgroundColor;
+}
 .page {
   display: grid;
-  grid-template-columns: minmax(1rem, 1fr) auto minmax(1rem, 1fr);
+  grid-template-columns: minmax(1rem, 1fr) minmax(auto, 600px) minmax(1rem, 1fr);
   grid-template-rows: minmax(1rem, 1fr) auto minmax(1rem, 1fr);
   width: 100%;
   min-height: 100vh;
-  background-color: pageBackgroundColor;
   overflow: hidden;
 }
 .scroll {
