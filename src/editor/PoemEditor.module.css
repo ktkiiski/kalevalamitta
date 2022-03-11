@@ -56,12 +56,25 @@
   pointer-events: none;
   color: white;
 }
+.row.error.even {
+  background-color: #880000;
+}
+.row.error.odd {
+  background-color: #951515;
+}
+.row.even,
+.row.short.even {
+  background-color: #000000;
+}
+.row.odd,
+.row.short.odd {
+  background-color: #151515;
+}
 .rowMargin {
   padding: 0 0.5rem;
   display: block;
   position: absolute;
   left: 100%;
-  color: white;
   user-select: none;
 }
 .trokee.odd {

@@ -12,6 +12,7 @@ export type SyllableError = 'A' | 'B' | '1' | '2' | '3' | '4';
 export interface Verse {
   trokees: Trokee[];
   syllableCount: number;
+  tokens: Token[];
 }
 
 interface TrokeeSyllable extends SyllableToken {
@@ -75,5 +76,5 @@ export default function parseVerse(tokens: Token[]): Verse {
       }
     });
   });
-  return { trokees, syllableCount };
+  return { trokees, syllableCount, tokens };
 }

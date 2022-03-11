@@ -1,5 +1,10 @@
+import classNames from 'classnames';
 import { VFC } from 'react';
+import isTooLongVerse from '../verses/isTooLongVerse';
+import isTooShortVerse from '../verses/isTooShortVerse';
+import isInvalidVerse from '../verses/isInvalidVerse';
 import { Verse } from '../verses/parseVerse';
+import styles from './VerseValidation.module.css';
 
 interface VerseValidationProps {
   className?: string;
@@ -7,18 +12,20 @@ interface VerseValidationProps {
 }
 
 const VerseValidation: VFC<VerseValidationProps> = ({ className, verse }) => {
-  const { trokees, syllableCount } = verse;
+  const { syllableCount } = verse;
   if (!syllableCount) {
     return null;
   }
-  if (syllableCount < 8) {
-    return <span className={className}>{`${syllableCount}/8`}</span>;
+  if (isTooShortVerse(verse)) {
+    return <span className={classNames(className, styles.short)}>{`${syllableCount}/8`}</span>;
   }
-  const errors = trokees.flatMap((trokee) => trokee.syllables.flatMap((syllable) => syllable.errors));
-  if (syllableCount > 9 || errors.length) {
-    return <span className={className}>❌</span>;
+  if (isTooLongVerse(verse)) {
+    return <span className={classNames(className, styles.long)}>{`${syllableCount}!`}</span>;
   }
-  return <span className={className}>✅</span>;
+  if (isInvalidVerse(verse)) {
+    return <span className={classNames(className, styles.error)}>❌</span>;
+  }
+  return <span className={classNames(className, styles.valid)}>✅</span>;
 };
 
 export default VerseValidation;
