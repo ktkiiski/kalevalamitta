@@ -1,0 +1,130 @@
+@value pageBackgroundColor: #aed7da;
+@value pageShadowColor: #8cb4b7;
+@value scrollBackgroundColor: #c9a46d;
+@value scrollShadeLight: #dfba83;
+@value scrollShadeDark: #d6b079;
+@value scrollShadowColor: #bd9760;
+
+.page {
+  display: grid;
+  grid-template-columns: minmax(1rem, 1fr) auto minmax(1rem, 1fr);
+  grid-template-rows: minmax(1rem, 1fr) auto minmax(1rem, 1fr);
+  width: 100%;
+  min-height: 100vh;
+  background-color: pageBackgroundColor;
+  overflow: hidden;
+}
+.scroll {
+  grid-column: 2;
+  grid-row: 2;
+  z-index: 1;
+  position: relative;
+}
+.scroll::before,
+.scroll::after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: -0.5rem;
+  right: -0.5rem;
+  height: 3rem;
+  background-color: scrollShadowColor;
+  border-radius: 0.125rem;
+  z-index: -1;
+}
+.scroll::before {
+  top: 1rem;
+}
+.scroll::after {
+  bottom: 1rem;
+}
+.scrollEnd {
+  height: 5rem;
+  background-color: scrollShadeDark;
+  position: relative;
+  overflow: hidden;
+}
+.scrollEnd::before,
+.scrollEnd::after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1rem;
+}
+.scrollEnd::before {
+  top: -0.5rem;
+  border-bottom-left-radius: 100%;
+  border-bottom-right-radius: 100%;
+}
+.scrollEnd::after {
+  bottom: -0.5rem;
+  border-top-left-radius: 100%;
+  border-top-right-radius: 100%;
+}
+.scrollTop,
+.scrollBottom {
+  composes: scrollEnd;
+}
+.scrollTop::before {
+  background-color: pageBackgroundColor;
+}
+.scrollTop::after,
+.scrollBottom::before {
+  background-color: scrollShadowColor;
+}
+.scrollBottom::after {
+  background-color: pageShadowColor;
+}
+.scrollEndShade {
+  height: 2.5rem;
+  background-color: scrollShadeLight;
+  border-bottom-left-radius: 100%;
+  border-bottom-right-radius: 100%;
+}
+.scrollMiddle {
+  margin-left: 0.5rem;
+  border-right: 0.5rem solid pageShadowColor;
+  background-color: scrollBackgroundColor;
+  overflow: hidden;
+}
+.scrollMiddleTop,
+.scrollMiddleBottom {
+  height: 2rem;
+  background-color: scrollShadowColor;
+}
+.scrollMiddleTop::after,
+.scrollMiddleBottom::after {
+  content: '';
+  display: block;
+  height: 100%;
+  background-color: scrollBackgroundColor;
+}
+.scrollMiddleTop::after {
+  border-top-left-radius: 100%;
+  border-top-right-radius: 100%;
+}
+.scrollMiddleBottom::after {
+  border-bottom-left-radius: 100%;
+  border-bottom-right-radius: 100%;
+}
+.scrollContent {
+  padding: 0 1rem;
+}
+.shadowRight,
+.shadowBottom {
+  background-color: pageShadowColor;
+  transform-origin: left top;
+  margin: 0 -1px -1px 0;
+}
+.shadowRight {
+  grid-column: 3;
+  grid-row: 2;
+  transform: skewY(45deg);
+}
+.shadowBottom {
+  grid-row: 3;
+  grid-column: 2;
+  transform: skewX(45deg);
+}

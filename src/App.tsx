@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './App.css';
 import PoemEditor from './editor/PoemEditor';
+import Layout from './layout/Layout';
 
 const initialPoem = `Mieleni minun tekevi,
 Aivoni ajattelevi
@@ -12,10 +13,10 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
+      <Layout>
         <h1>Kalevalamitta</h1>
         <PoemEditor content={poem} onChange={setPoem} />
-      </header>
+      </Layout>
     </div>
   );
 }
