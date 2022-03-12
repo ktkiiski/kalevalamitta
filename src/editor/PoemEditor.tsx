@@ -27,44 +27,49 @@ const PoemEditor: VFC<PoemEditorProps> = ({ content, onChange }) => {
           onChange={(event) => onChange(event.currentTarget.value)}
           className={styles.textarea}
           placeholder="Kirjoita tähän…"
+          spellCheck={false}
         />
         <div className={styles.highlighting}>
-          {verses.map((verse, row) => (
-            <div
-              className={classNames(styles.row, row % 2 ? styles.odd : styles.even, {
-                [styles.short]: isTooShortVerse(verse),
-                [styles.long]: isTooLongVerse(verse),
-                [styles.error]: isInvalidVerse(verse),
-              })}
-              key={row}
-            >
-              <VerseValidation verse={verse} className={styles.rowMargin} />
-              {!verse.tokens.length && ' '}
-              {verse.trokees.map((trokee, trokeeIdx) => (
-                <span key={trokeeIdx} className={classNames(styles.trokee, trokeeIdx % 2 ? styles.odd : styles.even)}>
-                  {trokee.tokens.map((token, idx) =>
-                    token.type === 'fill' ? (
-                      token.text
-                    ) : (
-                      <span
-                        key={idx}
-                        className={classNames(
-                          styles.syllableToken,
-                          token.index % 2 ? styles.odd : styles.even,
-                          token.errors.length > 0 && styles.errorToken,
-                        )}
-                      >
-                        {token.text}
-                      </span>
-                    ),
-                  )}
-                </span>
-              ))}
-            </div>
-          ))}
+          {verses.map((verse, row) => {
+            const isTooShort = isTooShortVerse(verse);
+            const isTooLong = isTooLongVerse(verse);
+            const isInvalid = isInvalidVerse(verse);
+            return (
+              <div
+                className={classNames(styles.row, row % 2 ? styles.odd : styles.even, {
+                  [styles.short]: isTooShort,
+                  [styles.long]: isTooLong,
+                  [styles.error]: !isTooShort && !isTooLong && isInvalid,
+                })}
+                key={row}
+              >
+                <VerseValidation verse={verse} className={styles.rowMargin} />
+                {!verse.tokens.length && ' '}
+                {verse.trokees.map((trokee, trokeeIdx) => (
+                  <span key={trokeeIdx} className={classNames(styles.trokee, trokeeIdx % 2 ? styles.odd : styles.even)}>
+                    {trokee.tokens.map((token, idx) =>
+                      token.type === 'fill' ? (
+                        token.text
+                      ) : (
+                        <span
+                          key={idx}
+                          className={classNames(
+                            styles.syllableToken,
+                            token.index % 2 ? styles.odd : styles.even,
+                            token.errors.length > 0 && styles.errorToken,
+                          )}
+                        >
+                          {token.text}
+                        </span>
+                      ),
+                    )}
+                  </span>
+                ))}
+              </div>
+            );
+          })}
         </div>
       </div>
-      <div className={styles.rightMargin} />
     </div>
   );
 };

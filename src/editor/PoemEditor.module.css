@@ -14,13 +14,6 @@
   overflow: visible;
   flex-grow: 1;
 }
-.rightMargin {
-  background-color: black;
-}
-.rightMargin,
-.rowMargin {
-  width: 100px;
-}
 .textarea,
 .highlighting {
   min-height: 200px;
@@ -48,46 +41,46 @@
   appearance: none;
   resize: none;
   color: rgba(0, 0, 0, 0);
-  caret-color: white;
+  caret-color: black;
   outline: none;
 }
 .highlighting {
   z-index: 0;
   pointer-events: none;
-  color: white;
+  color: black;
 }
-.row.error.even {
-  background-color: #880000;
+.row.error.even,
+.row.long.even {
+  background-color: rgba(255, 0, 0, 0.3);
 }
-.row.error.odd {
-  background-color: #951515;
+.row.error.odd,
+.row.long.odd {
+  background-color: rgba(255, 0, 0, 0.25);
 }
-.row.even,
-.row.short.even {
-  background-color: #000000;
+.row.even {
+  background-color: rgba(0, 0, 0, 0.1);
 }
-.row.odd,
-.row.short.odd {
-  background-color: #151515;
+.row.odd {
+  background-color: rgba(0, 0, 0, 0.05);
 }
 .rowMargin {
   padding: 0 0.5rem;
   display: block;
   position: absolute;
-  left: 100%;
+  right: 0;
   user-select: none;
 }
 .trokee.odd {
   background-color: transparent;
 }
 .trokee.even {
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0.15);
 }
 .syllableToken.odd {
-  color: #ff7777;
+  color: rgb(0, 0, 0);
 }
 .syllableToken.even {
-  color: #7777ff;
+  color: rgb(100, 100, 100);
 }
 .errorToken {
   background-color: red;
