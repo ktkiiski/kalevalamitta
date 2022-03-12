@@ -5,6 +5,7 @@ export interface FillToken {
   text: string;
   row: number;
   column: number;
+  offset: number;
 }
 
 export interface SyllableToken {
@@ -12,6 +13,7 @@ export interface SyllableToken {
   text: string;
   row: number;
   column: number;
+  offset: number;
   index: number;
   beginsWord: boolean;
   endsWord: boolean;
@@ -21,7 +23,9 @@ export type Token = FillToken | SyllableToken;
 
 export default function hyphenateText(text: string): Token[][] {
   const rows = text.split('\n');
-  return rows.map((rowText, rowIndex) => {
+  let offset = 0;
+  return rows.map((lineText, rowIndex) => {
+    const rowText = rowIndex < rows.length - 1 ? `${lineText}\n` : lineText;
     const tokens: Token[] = [];
     const tokenTexts = rowText.split(/(\p{L}+(?:[-']\p{L}+)*)/gu);
     let column = 0;
@@ -34,27 +38,30 @@ export default function hyphenateText(text: string): Token[][] {
             text: tokenText,
             row: rowIndex,
             column,
+            offset,
           });
         }
       } else {
         // Word
         const wordSyllables = hyphenateWord(tokenText);
         const wordSyllableLastIndex = wordSyllables.length - 1;
-        let syllableColumn = column;
+        let wordOffset = 0;
         wordSyllables.forEach((syllableText, syllableIndex) => {
           tokens.push({
             type: 'syllable',
             text: syllableText,
             row: rowIndex,
-            column: syllableColumn,
+            column: column + wordOffset,
+            offset: offset + wordOffset,
             index: syllableIndex,
             beginsWord: syllableIndex === 0,
             endsWord: syllableIndex === wordSyllableLastIndex,
           });
-          syllableColumn += syllableText.length;
+          wordOffset += syllableText.length;
         });
       }
       column += tokenText.length;
+      offset += tokenText.length;
     });
     return tokens;
   });

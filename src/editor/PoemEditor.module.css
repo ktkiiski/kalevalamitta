@@ -1,87 +1,29 @@
-.container {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  font-family: 'Times New Roman', Times, serif;
-  font-size: 1.5rem;
-  line-height: 2rem;
-  letter-spacing: 0.2rem;
-  text-align: left;
-  overflow: hidden;
-}
 .editor {
-  position: relative;
-  overflow: visible;
-  flex-grow: 1;
-}
-.textarea,
-.highlighting {
-  min-height: 200px;
-  box-sizing: border-box;
-  font-family: inherit;
-  font-weight: inherit;
-  font-size: inherit;
-  line-height: inherit;
-  letter-spacing: inherit;
-  overflow: hidden;
-  border-style: none;
-  background: transparent;
-  padding: 0.1rem 0.5rem;
-  margin: 0;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 2rem;
+  line-height: 3rem;
+  text-align: left;
   white-space: pre-wrap;
-  word-break: break-word;
-}
-.textarea {
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1;
-  appearance: none;
-  resize: none;
-  color: rgba(0, 0, 0, 0);
-  caret-color: black;
+  position: relative;
   outline: none;
 }
-.highlighting {
-  z-index: 0;
-  pointer-events: none;
-  color: black;
-}
-.row.error.even,
-.row.long.even {
+.verse.error,
+.verse.long {
   background-color: rgba(255, 0, 0, 0.3);
+  color: rgb(100, 0, 0);
 }
-.row.error.odd,
-.row.long.odd {
-  background-color: rgba(255, 0, 0, 0.25);
-}
-.row.even {
-  background-color: rgba(0, 0, 0, 0.1);
-}
-.row.odd {
-  background-color: rgba(0, 0, 0, 0.05);
-}
-.rowMargin {
-  padding: 0 0.5rem;
-  display: block;
-  position: absolute;
-  right: 0;
-  user-select: none;
-}
-.trokee.odd {
-  background-color: transparent;
-}
-.trokee.even {
-  background-color: rgba(0, 0, 0, 0.15);
-}
-.syllableToken.odd {
-  color: rgb(0, 0, 0);
-}
-.syllableToken.even {
-  color: rgb(100, 100, 100);
+.trokee + .trokee::before {
+  content: '/';
+  font-size: 3rem;
+  vertical-align: -0.4rem;
+  color: #778;
 }
 .errorToken {
   background-color: red;
+}
+.hyphened::after {
+  font-size: 1.5rem;
+  content: '-';
+  color: #667;
+  vertical-align: 0.1rem;
 }
