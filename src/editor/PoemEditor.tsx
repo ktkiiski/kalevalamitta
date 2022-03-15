@@ -19,25 +19,25 @@ function getOffset(element: HTMLElement, range: Range, node: Node, offset: numbe
   return rangeClone.toString().length;
 }
 
-function getSelectionOffsets(element: HTMLElement, selection: Selection | null): [number | null, number | null] {
+function getCaretOffset(element: HTMLElement, selection: Selection | null): number | null {
   const rangeCount = selection?.rangeCount;
   const range = rangeCount ? selection.getRangeAt(0) : null;
   if (!selection || !range) {
-    return [null, null];
+    return null;
   }
-  const { anchorNode, anchorOffset, focusNode, focusOffset } = selection;
-  const startOffset = anchorNode && getOffset(element, range, anchorNode, anchorOffset);
-  const endOffset = focusNode && getOffset(element, range, focusNode, focusOffset);
-  return [startOffset ?? endOffset, endOffset ?? startOffset];
+  const { focusNode, focusOffset } = selection;
+  return focusNode && getOffset(element, range, focusNode, focusOffset);
 }
 
-function setSelection(selection: Selection, startNode: Node, startOffset: number, endNode: Node, endOffset: number) {
+function setSelection(selection: Selection, startNode: Node, startOffset: number, endNode?: Node, endOffset?: number) {
   const range = document.createRange();
   range.setStart(startNode, startOffset);
   range.collapse(true);
   selection.removeAllRanges();
   selection.addRange(range);
-  selection.extend?.(endNode, endOffset);
+  if (endNode != null && endOffset != null) {
+    selection.extend?.(endNode, endOffset);
+  }
 }
 
 function createElement(name: string, className: string, children: Node[]) {
@@ -55,15 +55,13 @@ function appendChildren(element: HTMLElement, nodes: Node[]) {
 
 function rebuildContents(element: HTMLElement, content: string) {
   const selection = document.getSelection();
-  const [startOffset, endOffset] = getSelectionOffsets(element, selection);
+  const caretOffset = getCaretOffset(element, selection);
   // Rebuild contents
   const hyphenation = hyphenateText(content);
   const verses = hyphenation.map(parseVerse);
   element.innerHTML = '';
-  let newStartNode: Node | null = null;
-  let newStartOffset: number = 0;
-  let newEndNode: Node | null = null;
-  let newEndOffset: number = 0;
+  let newSelectionNode: Node | null = null;
+  let newSelectionOffset: number = 0;
   appendChildren(
     element,
     verses.map((verse, row) => {
@@ -84,13 +82,9 @@ function rebuildContents(element: HTMLElement, content: string) {
             trokee.tokens.map((token) => {
               const { text, offset } = token;
               const textNode = document.createTextNode(text);
-              if (startOffset != null && offset <= startOffset && startOffset <= offset + text.length) {
-                newStartNode = textNode;
-                newStartOffset = startOffset - offset;
-              }
-              if (endOffset != null && offset <= endOffset && endOffset <= offset + text.length) {
-                newEndNode = textNode;
-                newEndOffset = endOffset - offset;
+              if (caretOffset != null && offset <= caretOffset && caretOffset <= offset + text.length) {
+                newSelectionNode = textNode;
+                newSelectionOffset = caretOffset - offset;
               }
               return token.type === 'fill'
                 ? textNode
@@ -111,8 +105,8 @@ function rebuildContents(element: HTMLElement, content: string) {
     }),
   );
   // Restore selection
-  if (selection && newStartNode && newEndNode) {
-    setSelection(selection, newStartNode, newStartOffset, newEndNode, newEndOffset);
+  if (selection && newSelectionNode) {
+    setSelection(selection, newSelectionNode, newSelectionOffset);
   }
 }
 
