@@ -85,11 +85,24 @@
   font-size: 1.5em;
   color: #778;
 }
-.syllableToken.odd {
+.syllable {
+  position: relative;
+}
+.syllable.odd {
   color: rgb(0, 0, 0);
 }
-.syllableToken.even {
+.syllable.even {
   color: rgb(100, 100, 100);
+}
+.invisible {
+  visibility: hidden;
+}
+.syllableText {
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  letter-spacing: 0;
 }
 .errorToken {
   background-color: red;

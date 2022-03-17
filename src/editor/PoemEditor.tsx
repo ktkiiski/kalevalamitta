@@ -13,6 +13,8 @@ interface PoemEditorProps {
   onChange: (content: string) => void;
 }
 
+const baseLetterSpacing = 0.4;
+
 const PoemEditor: VFC<PoemEditorProps> = ({ content, onChange }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const hyphenation = hyphenateText(content);
@@ -20,7 +22,7 @@ const PoemEditor: VFC<PoemEditorProps> = ({ content, onChange }) => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.editor}>
+      <div className={styles.editor} style={{ letterSpacing: `${baseLetterSpacing}rem` }}>
         <textarea
           ref={textareaRef}
           value={content}
@@ -51,21 +53,26 @@ const PoemEditor: VFC<PoemEditorProps> = ({ content, onChange }) => {
                       [styles.trokeeSplit]: trokeeIdx > 0,
                     })}
                   >
-                    {trokee.tokens.map((token, idx) =>
-                      token.type === 'fill' ? (
-                        token.text
-                      ) : (
+                    {trokee.tokens.map((token, idx) => {
+                      const letterSpacing = (1 - 1 / Math.max(1, token.text.length - 1)) * baseLetterSpacing;
+                      if (token.type !== 'syllable') {
+                        return token.text;
+                      }
+                      return (
                         <span
                           key={idx}
-                          className={classNames(styles.syllableToken, token.index % 2 ? styles.odd : styles.even, {
+                          className={classNames(styles.syllable, token.index % 2 ? styles.odd : styles.even, {
                             [styles.errorToken]: token.errors.length > 0 && styles.errorToken,
                             [styles.hyphened]: !token.endsWord,
                           })}
                         >
-                          {token.text}
+                          <span className={styles.invisible}>{token.text}</span>
+                          <span className={styles.syllableText} style={{ letterSpacing: `${letterSpacing}rem` }}>
+                            {token.text}
+                          </span>
                         </span>
-                      ),
-                    )}
+                      );
+                    })}
                   </span>
                 ))}
               </div>
