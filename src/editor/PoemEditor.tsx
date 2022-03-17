@@ -47,12 +47,7 @@ const PoemEditor: VFC<PoemEditorProps> = ({ content, onChange }) => {
                 <VerseValidation verse={verse} className={styles.rowMargin} />
                 {!verse.tokens.length && ' '}
                 {verse.trokees.map((trokee, trokeeIdx) => (
-                  <span
-                    key={trokeeIdx}
-                    className={classNames(styles.trokee, {
-                      [styles.trokeeSplit]: trokeeIdx > 0,
-                    })}
-                  >
+                  <span key={trokeeIdx} className={classNames(styles.trokee, trokeeIdx % 2 ? styles.odd : styles.even)}>
                     {trokee.tokens.map((token, idx) => {
                       const letterSpacing = (1 - 1 / Math.max(1, token.text.length - 1)) * baseLetterSpacing;
                       if (token.type !== 'syllable') {
