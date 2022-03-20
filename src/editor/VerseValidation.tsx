@@ -1,8 +1,7 @@
 import classNames from 'classnames';
-import { VFC } from 'react';
+import isInvalidVerse from '../verses/isInvalidVerse';
 import isTooLongVerse from '../verses/isTooLongVerse';
 import isTooShortVerse from '../verses/isTooShortVerse';
-import isInvalidVerse from '../verses/isInvalidVerse';
 import { Verse } from '../verses/parseVerse';
 import styles from './VerseValidation.module.css';
 
@@ -11,7 +10,7 @@ interface VerseValidationProps {
   verse: Verse;
 }
 
-const VerseValidation: VFC<VerseValidationProps> = ({ className, verse }) => {
+function VerseValidation({ className, verse }: VerseValidationProps) {
   const { syllableCount } = verse;
   if (!syllableCount) {
     return null;
@@ -26,6 +25,6 @@ const VerseValidation: VFC<VerseValidationProps> = ({ className, verse }) => {
     return <span className={classNames(className, styles.error)}>❌</span>;
   }
   return <span className={classNames(className, styles.valid)}>✅</span>;
-};
+}
 
 export default VerseValidation;

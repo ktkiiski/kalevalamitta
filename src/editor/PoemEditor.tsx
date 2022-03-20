@@ -1,5 +1,6 @@
+/* eslint-disable react/no-array-index-key */
 import classNames from 'classnames';
-import { useRef, VFC } from 'react';
+import { useRef } from 'react';
 import hyphenateText from '../finnish/hyphenateText';
 import isInvalidVerse from '../verses/isInvalidVerse';
 import isTooLongVerse from '../verses/isTooLongVerse';
@@ -15,7 +16,7 @@ interface PoemEditorProps {
 
 const baseLetterSpacing = 0.3;
 
-const PoemEditor: VFC<PoemEditorProps> = ({ content, onChange }) => {
+function PoemEditor({ content, onChange }: PoemEditorProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const hyphenation = hyphenateText(content);
   const verses = hyphenation.map(parseVerse);
@@ -77,6 +78,6 @@ const PoemEditor: VFC<PoemEditorProps> = ({ content, onChange }) => {
       </div>
     </div>
   );
-};
+}
 
 export default PoemEditor;

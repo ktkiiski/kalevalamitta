@@ -28,7 +28,7 @@
   "prettier": "eslint-config-broilerplate/prettier.config",
   "eslintConfig": {
     "extends": [
-      "react-app",
+      "broilerplate/react",
       "react-app/jest"
     ]
   },
@@ -45,6 +45,6 @@
     ]
   },
   "devDependencies": {
-    "eslint-config-broilerplate": "^3.0.0"
+    "eslint-config-broilerplate": "^3.1.0"
   }
 }

@@ -1,9 +1,11 @@
-import { FC } from 'react';
+import { ReactNode } from 'react';
 import styles from './Layout.module.css';
 
-interface LayoutProps {}
+interface LayoutProps {
+  children: ReactNode;
+}
 
-const Layout: FC<LayoutProps> = ({ children }) => {
+function Layout({ children }: LayoutProps) {
   return (
     <div className={styles.page}>
       <div className={styles.scroll}>
@@ -23,6 +25,6 @@ const Layout: FC<LayoutProps> = ({ children }) => {
       <div className={styles.shadowBottom} />
     </div>
   );
-};
+}
 
 export default Layout;
