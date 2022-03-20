@@ -13,7 +13,7 @@ interface PoemEditorProps {
   onChange: (content: string) => void;
 }
 
-const baseLetterSpacing = 0.4;
+const baseLetterSpacing = 0.3;
 
 const PoemEditor: VFC<PoemEditorProps> = ({ content, onChange }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
