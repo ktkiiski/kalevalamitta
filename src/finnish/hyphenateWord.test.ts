@@ -118,6 +118,12 @@ const hyphenations = [
   "saa-'a-ni",
   // 'sa-ne-le-ma-han.',
   // 'kas-vin-kump-pa-li-ni!',
+  "vaa-'an",
+  "ko-'ois-sa",
+  "rei-'it-tää",
+  'ruo-’on',
+  'nau-’un',
+  'liu-’un',
   // Words with upper casing
   'Ka-la',
   'LUI-TA',
