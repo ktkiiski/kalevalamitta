@@ -1,7 +1,6 @@
 import isConsonant from './isConsonant';
 import isDiftong from './isDiftong';
 import isJustConsonants from './isJustConsonants';
-import isJustVowels from './isJustVowels';
 import isVowel from './isVowel';
 
 function isSyllableSplit(candidate: string, currentChar: string, nextChar: string, isFirst: boolean): boolean {
@@ -19,7 +18,7 @@ function isSyllableSplit(candidate: string, currentChar: string, nextChar: strin
     if (prevChar.toLocaleLowerCase() === currentChar.toLocaleLowerCase()) {
       return false;
     }
-    if (candidate.length >= 2 && isJustVowels(candidate)) {
+    if (isVowel(candidate[candidate.length - 2])) {
       // Do not allow 3 successive vowels
       return true;
     }

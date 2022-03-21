@@ -39,6 +39,8 @@ const hyphenations = [
   'ai-e',
   'ra-ot',
   'te-os',
+  'hau-o',
+  'lau-oil-la',
   // CV
   'ka-la',
   'su-ku',
