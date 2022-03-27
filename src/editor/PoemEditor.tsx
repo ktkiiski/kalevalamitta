@@ -39,7 +39,11 @@ function PoemEditor({ content, onChange }: PoemEditorProps) {
               >
                 {!verse.tokens.length && ' '}
                 {verse.trokees.map((trokee, trokeeIdx) => (
-                  <span key={trokeeIdx} className={classNames(styles.trokee, trokeeIdx % 2 ? styles.odd : styles.even)}>
+                  <span
+                    key={trokeeIdx}
+                    className={classNames(styles.trokee, trokeeIdx % 2 ? styles.odd : styles.even)}
+                    aria-hidden
+                  >
                     {trokee.tokens.map((token, idx) => {
                       const letterSpacing = (1 - 1 / Math.max(1, token.text.length - 1)) * baseLetterSpacing;
                       if (token.type !== 'syllable') {

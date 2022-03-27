@@ -11,8 +11,8 @@
 }
 .error,
 .long {
-  color: red;
+  color: #aa0000;
 }
 .valid {
-  color: green;
+  color: #007c00;
 }
