@@ -24,14 +24,6 @@ function PoemEditor({ content, onChange }: PoemEditorProps) {
   return (
     <div className={styles.container}>
       <div className={styles.editor} style={{ letterSpacing: `${baseLetterSpacing}rem` }}>
-        <textarea
-          ref={textareaRef}
-          value={content}
-          onChange={(event) => onChange(event.currentTarget.value)}
-          className={styles.textarea}
-          placeholder="Kirjoita tähän…"
-          spellCheck={false}
-        />
         <div className={styles.highlighting}>
           {verses.map((verse, row) => {
             const isTooShort = isTooShortVerse(verse);
@@ -45,7 +37,6 @@ function PoemEditor({ content, onChange }: PoemEditorProps) {
                 })}
                 key={row}
               >
-                <VerseValidation verse={verse} className={styles.rowMargin} />
                 {!verse.tokens.length && ' '}
                 {verse.trokees.map((trokee, trokeeIdx) => (
                   <span key={trokeeIdx} className={classNames(styles.trokee, trokeeIdx % 2 ? styles.odd : styles.even)}>
@@ -71,10 +62,19 @@ function PoemEditor({ content, onChange }: PoemEditorProps) {
                     })}
                   </span>
                 ))}
+                <VerseValidation verse={verse} className={styles.rowMargin} />
               </div>
             );
           })}
         </div>
+        <textarea
+          ref={textareaRef}
+          value={content}
+          onChange={(event) => onChange(event.currentTarget.value)}
+          className={styles.textarea}
+          placeholder="Kirjoita tähän…"
+          spellCheck={false}
+        />
       </div>
     </div>
   );

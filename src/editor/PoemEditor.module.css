@@ -65,10 +65,13 @@
 }
 .rowMargin {
   padding: 0 0.5rem;
-  display: block;
-  position: absolute;
-  right: 0;
+  display: inline-block;
+  position: relative;
   user-select: none;
+  cursor: pointer;
+  z-index: 2;
+  pointer-events: all;
+  vertical-align: text-bottom;
 }
 .trokee {
   position: relative;
