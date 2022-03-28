@@ -33,7 +33,7 @@ function PoemEditor({ content, onChange }: PoemEditorProps) {
               <div
                 className={classNames(styles.row, row % 2 ? styles.odd : styles.even, {
                   [styles.short]: isTooShort,
-                  [styles.error]: !isTooShort && !isTooLong && isInvalid,
+                  [styles.error]: !isTooShort && (isTooLong || isInvalid),
                 })}
                 key={row}
               >
@@ -41,7 +41,7 @@ function PoemEditor({ content, onChange }: PoemEditorProps) {
                 {verse.trokees.map((trokee, trokeeIdx) => (
                   <span
                     key={trokeeIdx}
-                    className={classNames(styles.trokee, trokeeIdx % 2 ? styles.odd : styles.even)}
+                    className={classNames(styles.trokee, !isTooShort && trokeeIdx % 2 ? styles.odd : styles.even)}
                     aria-hidden
                   >
                     {trokee.tokens.map((token, idx) => {
@@ -52,8 +52,8 @@ function PoemEditor({ content, onChange }: PoemEditorProps) {
                       return (
                         <span
                           key={idx}
-                          className={classNames(styles.syllable, token.index % 2 ? styles.odd : styles.even, {
-                            [styles.errorToken]: token.errors.length > 0 && styles.errorToken,
+                          className={classNames(styles.syllable, {
+                            [styles.errorToken]: !isTooShort && token.errors.length > 0 && styles.errorToken,
                             [styles.hyphened]: !token.endsWord,
                           })}
                         >
@@ -66,7 +66,7 @@ function PoemEditor({ content, onChange }: PoemEditorProps) {
                     })}
                   </span>
                 ))}
-                <VerseValidation verse={verse} className={styles.rowMargin} />
+                <VerseValidation verse={verse} className={styles.rowValidation} />
               </div>
             );
           })}

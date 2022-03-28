@@ -1,10 +1,14 @@
-.text {
+.container {
   height: 1em;
   line-height: 1em;
+  font-size: 0.8em;
+  letter-spacing: normal;
 }
 .icon {
+  vertical-align: top;
   width: 1em;
   height: 1em;
+  margin-right: 0.2em;
 }
 .short {
   color: gray;

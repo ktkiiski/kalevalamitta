@@ -17,16 +17,25 @@ function VerseValidation({ className, verse }: VerseValidationProps) {
   if (!syllableCount) {
     return null;
   }
-  if (isTooShortVerse(verse)) {
-    return <span className={classNames(className, styles.text, styles.short)}>{`${syllableCount}/8`}</span>;
+  const isTooShort = isTooShortVerse(verse);
+  const isTooLong = isTooLongVerse(verse);
+  const isInvalid = isInvalidVerse(verse);
+  if (isTooShort) {
+    return <span className={classNames(className, styles.container, styles.short)}>{`${syllableCount}/8`}</span>;
   }
-  if (isTooLongVerse(verse)) {
-    return <span className={classNames(className, styles.text, styles.long)}>{`${syllableCount}!`}</span>;
+  if (isTooLong || isInvalid) {
+    return (
+      <span className={classNames(className, styles.container, isTooLong ? styles.long : styles.error)}>
+        <WarningIcon className={styles.icon} />
+        {isTooLong && syllableCount}
+      </span>
+    );
   }
-  if (isInvalidVerse(verse)) {
-    return <WarningIcon className={classNames(className, styles.icon, styles.error)} />;
-  }
-  return <OkIcon className={classNames(className, styles.icon, styles.valid)} />;
+  return (
+    <span className={classNames(className, styles.container, styles.valid)}>
+      <OkIcon className={styles.icon} />
+    </span>
+  );
 }
 
 export default VerseValidation;

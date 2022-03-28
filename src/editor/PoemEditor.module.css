@@ -7,7 +7,8 @@
   line-height: 3.5rem;
   letter-spacing: 0.2rem;
   text-align: left;
-  overflow: hidden;
+  overflow-y: hidden;
+  overflow-x: auto;
 }
 .editor {
   position: relative;
@@ -26,7 +27,7 @@
   overflow: hidden;
   border-style: none;
   background: transparent;
-  padding: 0.1rem 3rem 0.1rem 0.5rem;
+  padding: 0.3em 0;
   margin: 0;
   white-space: pre;
   word-break: break-word;
@@ -44,10 +45,18 @@
   caret-color: black;
   outline: none;
 }
+.textarea,
+.row {
+  padding-left: 0.3em;
+  padding-right: 0.3em;
+}
 .highlighting {
   z-index: 0;
   pointer-events: none;
   color: #333;
+}
+.row.short {
+  color: #5f5f64;
 }
 .row.error.even,
 .row.long.even {
@@ -63,15 +72,14 @@
 .row.odd {
   background-color: rgba(0, 0, 0, 0.05);
 }
-.rowMargin {
-  padding: 0 0.5rem;
+.rowValidation {
+  margin-left: 0.5em;
   display: inline-block;
   position: relative;
   user-select: none;
   cursor: pointer;
   z-index: 2;
   pointer-events: all;
-  vertical-align: text-bottom;
 }
 .trokee {
   position: relative;
