@@ -43,6 +43,8 @@ const verses = [
   'saa-pui/ ker-ran/ kor-ven/ kolk-{kaan:4}',
   'suh-det/-tan-sa/ Suo-men/ luon-{toon:4}',
   'tai-si/ muut-taa/ Lap-peen/-ran-{taan:4}',
+  // TODO: Compound words
+  // http://www.karuse.info/index.php?option=com_content&view=article&id=6&Itemid=16
 ];
 
 function parseVerseAsString(tokens: Token[]): string {

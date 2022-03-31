@@ -7,7 +7,7 @@ export interface Trokee {
   tokens: (FillToken | TrokeeSyllable)[];
 }
 
-export type SyllableError = 'A' | 'B' | '1' | '2' | '3' | '4';
+export type SyllableError = 'A' | 'B' | '2' | '3' | '4';
 
 export interface Verse {
   trokees: Trokee[];

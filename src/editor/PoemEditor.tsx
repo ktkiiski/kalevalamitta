@@ -1,12 +1,15 @@
 /* eslint-disable react/no-array-index-key */
 import classNames from 'classnames';
-import { useRef } from 'react';
+import { useCallback, useState } from 'react';
 import hyphenateText from '../finnish/hyphenateText';
+import getVerseErrors from '../verses/getVerseErrors';
 import isInvalidVerse from '../verses/isInvalidVerse';
 import isTooLongVerse from '../verses/isTooLongVerse';
 import isTooShortVerse from '../verses/isTooShortVerse';
-import parseVerse from '../verses/parseVerse';
+import parseVerse, { Verse } from '../verses/parseVerse';
+import ErrorMessage from './ErrorMessage';
 import styles from './PoemEditor.module.css';
+import Textarea, { Selection } from './Textarea';
 import VerseValidation from './VerseValidation';
 
 interface PoemEditorProps {
@@ -16,10 +19,40 @@ interface PoemEditorProps {
 
 const baseLetterSpacing = 0.3;
 
+function getFocus(caretOffset: number | null, verses: Verse[]): Verse | null {
+  if (caretOffset == null) {
+    return null;
+  }
+  for (const verse of verses) {
+    for (const token of verse.tokens) {
+      if (caretOffset <= token.offset + token.text.length) {
+        return verse;
+      }
+    }
+  }
+  return null;
+}
+
+function getVisibleErrors(verse: Verse | null) {
+  if (!verse) {
+    return [];
+  }
+  return getVerseErrors(verse).filter((error, index, errors) => errors.indexOf(error) === index);
+}
+
 function PoemEditor({ content, onChange }: PoemEditorProps) {
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [caretOffset, setCaretOffset] = useState<number | null>(null);
   const hyphenation = hyphenateText(content);
   const verses = hyphenation.map(parseVerse);
+  const onTextareaChange = useCallback(
+    (value: string, selection: Selection | null) => {
+      onChange(value);
+      setCaretOffset(selection?.end ?? null);
+    },
+    [onChange],
+  );
+  const currentVerse = getFocus(caretOffset, verses);
+  const errors = getVisibleErrors(currentVerse);
 
   return (
     <div className={styles.container}>
@@ -71,14 +104,19 @@ function PoemEditor({ content, onChange }: PoemEditorProps) {
             );
           })}
         </div>
-        <textarea
-          ref={textareaRef}
+        <Textarea
           value={content}
-          onChange={(event) => onChange(event.currentTarget.value)}
+          onChange={onTextareaChange}
           className={styles.textarea}
           placeholder="Kirjoita tähän…"
-          spellCheck={false}
         />
+      </div>
+      <div className={styles.errorMessages}>
+        {errors.map((error) => (
+          <p className={styles.errorMessage}>
+            <ErrorMessage error={error} />
+          </p>
+        ))}
       </div>
     </div>
   );
