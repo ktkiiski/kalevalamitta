@@ -41,6 +41,7 @@
   color: rgba(0, 0, 0, 0);
   caret-color: black;
   outline: none;
+  cursor: pointer;
 }
 .textarea,
 .row {
@@ -74,9 +75,11 @@
   display: inline-block;
   position: relative;
   user-select: none;
-  cursor: pointer;
   z-index: 2;
+  /*
+  cursor: pointer;
   pointer-events: all;
+  */
 }
 .trokee {
   position: relative;
