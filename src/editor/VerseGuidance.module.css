@@ -1,0 +1,21 @@
+.container {
+  margin: 0.5rem 1rem;
+  font-size: 1.2rem;
+  line-height: 1.5rem;
+  height: 5rem;
+}
+.paragraph {
+  margin: 0;
+}
+.short {
+  composes: short from './VerseRowValidation.module.css';
+}
+.long {
+  composes: long from './VerseRowValidation.module.css';
+}
+.valid {
+  composes: valid from './VerseRowValidation.module.css';
+}
+.error {
+  composes: error from './VerseRowValidation.module.css';
+}

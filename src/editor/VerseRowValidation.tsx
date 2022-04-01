@@ -3,7 +3,7 @@ import isInvalidVerse from '../verses/isInvalidVerse';
 import isTooLongVerse from '../verses/isTooLongVerse';
 import isTooShortVerse from '../verses/isTooShortVerse';
 import { Verse } from '../verses/parseVerse';
-import styles from './VerseValidation.module.css';
+import styles from './VerseRowValidation.module.css';
 import { ReactComponent as OkIcon } from './images/ok.svg';
 import { ReactComponent as WarningIcon } from './images/warning.svg';
 
@@ -12,7 +12,7 @@ interface VerseValidationProps {
   verse: Verse;
 }
 
-function VerseValidation({ className, verse }: VerseValidationProps) {
+function VerseRowValidation({ className, verse }: VerseValidationProps) {
   const { syllableCount } = verse;
   if (!syllableCount) {
     return null;
@@ -38,4 +38,4 @@ function VerseValidation({ className, verse }: VerseValidationProps) {
   );
 }
 
-export default VerseValidation;
+export default VerseRowValidation;

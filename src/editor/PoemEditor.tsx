@@ -2,15 +2,14 @@
 import classNames from 'classnames';
 import { useCallback, useState } from 'react';
 import hyphenateText from '../finnish/hyphenateText';
-import getVerseErrors from '../verses/getVerseErrors';
 import isInvalidVerse from '../verses/isInvalidVerse';
 import isTooLongVerse from '../verses/isTooLongVerse';
 import isTooShortVerse from '../verses/isTooShortVerse';
 import parseVerse, { Verse } from '../verses/parseVerse';
-import ErrorMessage from './ErrorMessage';
 import styles from './PoemEditor.module.css';
 import Textarea, { Selection } from './Textarea';
-import VerseValidation from './VerseValidation';
+import VerseGuidance from './VerseGuidance';
+import VerseRowValidation from './VerseRowValidation';
 
 interface PoemEditorProps {
   content: string;
@@ -33,13 +32,6 @@ function getFocus(caretOffset: number | null, verses: Verse[]): Verse | null {
   return null;
 }
 
-function getVisibleErrors(verse: Verse | null) {
-  if (!verse) {
-    return [];
-  }
-  return getVerseErrors(verse).filter((error, index, errors) => errors.indexOf(error) === index);
-}
-
 function PoemEditor({ content, onChange }: PoemEditorProps) {
   const [caretOffset, setCaretOffset] = useState<number | null>(null);
   const hyphenation = hyphenateText(content);
@@ -52,10 +44,9 @@ function PoemEditor({ content, onChange }: PoemEditorProps) {
     [onChange],
   );
   const currentVerse = getFocus(caretOffset, verses);
-  const errors = getVisibleErrors(currentVerse);
 
-  return (
-    <div className={styles.container}>
+  const editor = (
+    <div className={styles.scrollView}>
       <div className={styles.editor} style={{ letterSpacing: `${baseLetterSpacing}rem` }}>
         <div className={styles.highlighting}>
           {verses.map((verse, row) => {
@@ -99,7 +90,7 @@ function PoemEditor({ content, onChange }: PoemEditorProps) {
                     })}
                   </span>
                 ))}
-                <VerseValidation verse={verse} className={styles.rowValidation} />
+                <VerseRowValidation verse={verse} className={styles.rowValidation} />
               </div>
             );
           })}
@@ -111,13 +102,12 @@ function PoemEditor({ content, onChange }: PoemEditorProps) {
           placeholder="Kirjoita tähän…"
         />
       </div>
-      <div className={styles.errorMessages}>
-        {errors.map((error) => (
-          <p className={styles.errorMessage}>
-            <ErrorMessage error={error} />
-          </p>
-        ))}
-      </div>
+    </div>
+  );
+  return (
+    <div>
+      {editor}
+      {currentVerse && <VerseGuidance verse={currentVerse} />}
     </div>
   );
 }

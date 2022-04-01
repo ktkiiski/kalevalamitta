@@ -1,6 +1,6 @@
-.container {
+.scrollView {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: stretch;
   text-align: left;
   overflow-y: hidden;
@@ -11,6 +11,7 @@
   overflow: visible;
   font-size: 2rem;
   line-height: 3.5rem;
+  flex-grow: 1;
 }
 .textarea,
 .highlighting {
@@ -125,14 +126,4 @@
   font-size: 1.5rem;
   color: #667;
   transform: scaleX(75%);
-}
-.errorMessages {
-  margin: 0.5rem 1rem;
-  color: #770000;
-  font-size: 1.2rem;
-  line-height: 1.5rem;
-  height: 5rem;
-}
-.errorMessage {
-  margin: 0;
 }
