@@ -5,7 +5,7 @@ import hyphenateText from '../finnish/hyphenateText';
 import isInvalidVerse from '../verses/isInvalidVerse';
 import isTooLongVerse from '../verses/isTooLongVerse';
 import isTooShortVerse from '../verses/isTooShortVerse';
-import parseVerse, { Verse } from '../verses/parseVerse';
+import parseVerse, { TrokeeToken, Verse } from '../verses/parseVerse';
 import styles from './PoemEditor.module.css';
 import Textarea, { Selection } from './Textarea';
 import VerseGuidance from './VerseGuidance';
@@ -18,18 +18,20 @@ interface PoemEditorProps {
 
 const baseLetterSpacing = 0.3;
 
-function getFocus(caretOffset: number | null, verses: Verse[]): Verse | null {
+function getCurrentVerseAndToken(caretOffset: number | null, verses: Verse[]): [Verse | null, TrokeeToken | null] {
   if (caretOffset == null) {
-    return null;
+    return [null, null];
   }
   for (const verse of verses) {
     for (const token of verse.tokens) {
-      if (caretOffset <= token.offset + token.text.length) {
-        return verse;
+      const endOffset = token.offset + token.text.length;
+      const hasErrors = token.type === 'syllable' && token.errors.length > 0;
+      if (hasErrors ? caretOffset <= endOffset : caretOffset < endOffset) {
+        return [verse, token];
       }
     }
   }
-  return null;
+  return [null, null];
 }
 
 function PoemEditor({ content, onChange }: PoemEditorProps) {
@@ -43,7 +45,7 @@ function PoemEditor({ content, onChange }: PoemEditorProps) {
     },
     [onChange],
   );
-  const currentVerse = getFocus(caretOffset, verses);
+  const [currentVerse, currentToken] = getCurrentVerseAndToken(caretOffset, verses);
 
   const editor = (
     <div className={styles.scrollView}>
@@ -107,7 +109,7 @@ function PoemEditor({ content, onChange }: PoemEditorProps) {
   return (
     <div>
       {editor}
-      {currentVerse && <VerseGuidance verse={currentVerse} />}
+      <VerseGuidance verse={currentVerse} token={currentToken} />
     </div>
   );
 }

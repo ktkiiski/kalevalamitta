@@ -2,9 +2,11 @@ import { FillToken, SyllableToken, Token } from '../finnish/hyphenateText';
 import isLongVowelSyllable from '../finnish/isLongVowelSyllable';
 import isShortSyllable from '../finnish/isShortSyllable';
 
+export type TrokeeToken = FillToken | TrokeeSyllable;
+
 export interface Trokee {
   syllables: TrokeeSyllable[];
-  tokens: (FillToken | TrokeeSyllable)[];
+  tokens: TrokeeToken[];
 }
 
 export type SyllableError = 'A' | 'B' | '2' | '3' | '4';
@@ -12,7 +14,7 @@ export type SyllableError = 'A' | 'B' | '2' | '3' | '4';
 export interface Verse {
   trokees: Trokee[];
   syllableCount: number;
-  tokens: Token[];
+  tokens: TrokeeToken[];
 }
 
 interface TrokeeSyllable extends SyllableToken {
@@ -21,15 +23,16 @@ interface TrokeeSyllable extends SyllableToken {
 
 export default function parseVerse(tokens: Token[]): Verse {
   const trokees: Trokee[] = [];
-  for (let tokenIdx = tokens.length - 1; tokenIdx >= 0; tokenIdx -= 1) {
-    const rawToken = tokens[tokenIdx];
-    const token =
-      rawToken.type === 'fill'
-        ? rawToken
-        : {
-            ...rawToken,
-            errors: [],
-          };
+  const trokeeTokens = tokens.map((token) =>
+    token.type === 'fill'
+      ? token
+      : {
+          ...token,
+          errors: [],
+        },
+  );
+  for (let tokenIdx = trokeeTokens.length - 1; tokenIdx >= 0; tokenIdx -= 1) {
+    const token = trokeeTokens[tokenIdx];
     let [trokee] = trokees;
     if (!trokee || (token.type === 'syllable' && trokee.syllables.length >= 2 && trokees.length < 4)) {
       trokee = { syllables: [], tokens: [] };
@@ -76,5 +79,5 @@ export default function parseVerse(tokens: Token[]): Verse {
       }
     });
   });
-  return { trokees, syllableCount, tokens };
+  return { trokees, syllableCount, tokens: trokeeTokens };
 }
