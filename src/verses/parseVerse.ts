@@ -17,7 +17,7 @@ export interface Verse {
   tokens: TrokeeToken[];
 }
 
-interface TrokeeSyllable extends SyllableToken {
+export interface TrokeeSyllable extends SyllableToken {
   errors: SyllableError[];
 }
 

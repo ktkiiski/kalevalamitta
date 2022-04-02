@@ -5,7 +5,7 @@ import hyphenateText from '../finnish/hyphenateText';
 import isInvalidVerse from '../verses/isInvalidVerse';
 import isTooLongVerse from '../verses/isTooLongVerse';
 import isTooShortVerse from '../verses/isTooShortVerse';
-import parseVerse, { TrokeeToken, Verse } from '../verses/parseVerse';
+import parseVerse, { TrokeeSyllable, TrokeeToken, Verse } from '../verses/parseVerse';
 import styles from './PoemEditor.module.css';
 import Textarea, { Selection } from './Textarea';
 import VerseGuidance from './VerseGuidance';
@@ -18,17 +18,26 @@ interface PoemEditorProps {
 
 const baseLetterSpacing = 0.3;
 
+function isErrorToken(token: TrokeeToken): token is TrokeeSyllable {
+  return token.type === 'syllable' && token.errors.length > 0;
+}
+
+function getTokenEndOffset(token: TrokeeToken): number {
+  return token.offset + token.text.length;
+}
+
 function getCurrentVerseAndToken(caretOffset: number | null, verses: Verse[]): [Verse | null, TrokeeToken | null] {
   if (caretOffset == null) {
     return [null, null];
   }
   for (const verse of verses) {
-    for (const token of verse.tokens) {
-      const endOffset = token.offset + token.text.length;
-      const hasErrors = token.type === 'syllable' && token.errors.length > 0;
-      if (hasErrors ? caretOffset <= endOffset : caretOffset < endOffset) {
-        return [verse, token];
-      }
+    const { tokens } = verse;
+    const errorToken = tokens.find(
+      (token) => isErrorToken(token) && token.offset <= caretOffset && caretOffset <= getTokenEndOffset(token),
+    );
+    const currentToken = errorToken || tokens.find((token) => caretOffset <= getTokenEndOffset(token));
+    if (currentToken) {
+      return [verse, currentToken];
     }
   }
   return [null, null];
