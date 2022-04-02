@@ -1,5 +1,5 @@
 import hyphenateText, { Token } from '../finnish/hyphenateText';
-import parseVerse from './parseVerse';
+import parseVerses from './parseVerses';
 
 const verses = [
   // Valid verses
@@ -47,35 +47,38 @@ const verses = [
   // http://www.karuse.info/index.php?option=com_content&view=article&id=6&Itemid=16
 ];
 
-function parseVerseAsString(tokens: Token[]): string {
-  const parsedVerse = parseVerse(tokens);
-  return parsedVerse.trokees
-    .map((trokee) =>
-      trokee.tokens
-        .map((token) => {
-          let { text } = token;
-          if (token.type === 'syllable') {
-            if (token.errors.length) {
-              text = `{${text}:${token.errors.join(':')}}`;
-            }
-            if (!token.beginsWord) {
-              text = `-${text}`;
-            }
-          }
-          return text;
-        })
-        .join(''),
+function parseVersesAsString(tokens: Token[]): string {
+  const parsedVerses = parseVerses(tokens);
+  return parsedVerses
+    .map((verse) =>
+      verse.trokees
+        .map((trokee) =>
+          trokee.tokens
+            .map((token) => {
+              let { text } = token;
+              if (token.type === 'syllable') {
+                if (token.errors.length) {
+                  text = `{${text}:${token.errors.join(':')}}`;
+                }
+                if (!token.beginsWord) {
+                  text = `-${text}`;
+                }
+              }
+              return text;
+            })
+            .join(''),
+        )
+        .join('/'),
     )
-    .join('/');
+    .join('\n');
 }
 
-describe('parseVerse', () => {
+describe('parseVerses', () => {
   verses.forEach((expected) => {
     test(`parses ${JSON.stringify(expected)}`, () => {
       const verseText = expected.replace(/[/-]/g, '').replace(/{(\w+).*?}/g, '$1');
       const hyphenation = hyphenateText(verseText);
-      expect(hyphenation).toHaveLength(1);
-      expect(parseVerseAsString(hyphenation[0])).toBe(expected);
+      expect(parseVersesAsString(hyphenation)).toBe(expected);
     });
   });
 });

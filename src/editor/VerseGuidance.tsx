@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import getVerseErrors from '../verses/getVerseErrors';
 import isTooLongVerse from '../verses/isTooLongVerse';
 import isTooShortVerse from '../verses/isTooShortVerse';
-import { SyllableError, TrokeeToken, Verse } from '../verses/parseVerse';
+import { SyllableError, TrokeeToken, Verse } from '../verses/parseVerses';
 import styles from './VerseGuidance.module.css';
 
 const possibleErrors: SyllableError[] = ['A', 'B', '2', '3', '4'];
@@ -40,25 +40,31 @@ function VerseGuidance({ verse, token }: VerseGuidanceProps) {
   if (!verse) {
     return <div className={styles.container} />;
   }
-  const isTooShort = isTooShortVerse(verse);
-  const isTooLong = isTooLongVerse(verse);
-  const errors = getVerseErrors(verse);
-  const syllableErrors = token?.type === 'syllable' ? token.errors : [];
-  if (isTooShort) {
+  if (!verse.syllableCount) {
     return (
       <div className={classNames(styles.container, styles.short)}>
-        Säkeessä tulee olla 8 tai joskus 9 tavua. Kirjoita vielä {pluralize(8 - verse.syllableCount, 'tavu', 'tavua')}.
+        Kirjoita säe, jossa on yhteensä 8 tavua tai toisinaan 9.
       </div>
     );
   }
-  if (isTooLong) {
+  if (isTooShortVerse(verse)) {
+    return (
+      <div className={classNames(styles.container, styles.short)}>
+        Säkeessä tulee olla 8 tai toisinaan 9 tavua. Kirjoita vielä{' '}
+        {pluralize(8 - verse.syllableCount, 'tavu', 'tavua')}.
+      </div>
+    );
+  }
+  if (isTooLongVerse(verse)) {
     return (
       <div className={classNames(styles.container, styles.long)}>
-        Säkeessä saisi olla enintään 9 tavua, mieluiten 8. Poista ainakin{' '}
-        {pluralize(verse.syllableCount - 9, 'tavu', 'tavua')}.
+        Säkeessä saisi olla enintään 9 tavua, mieluiten 8.{' '}
+        <strong>Poista ainakin {pluralize(verse.syllableCount - 9, 'tavu', 'tavua')}.</strong>
       </div>
     );
   }
+  const errors = getVerseErrors(verse);
+  const syllableErrors = token?.type === 'syllable' ? token.errors : [];
   if (errors.length) {
     return (
       <div className={classNames(styles.container, styles.error)}>
@@ -74,8 +80,8 @@ function VerseGuidance({ verse, token }: VerseGuidanceProps) {
   }
   return (
     <div className={classNames(styles.container, styles.valid)}>
-      <strong>Säe näyttää hyvälle!</strong> Kirjoitathan yhdyssanat erikseen, sillä niihin sovelletaan sääntöjä kuin ne
-      olisivat erilliset sanat.
+      Säe näyttää hyvälle! Kirjoitathan yhdyssanat erikseen, sillä niihin sovelletaan sääntöjä kuin ne olisivat
+      erilliset sanat. <strong>Aloita uusi säe seuraavalta riviltä!</strong>
     </div>
   );
 }

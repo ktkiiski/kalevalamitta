@@ -15,24 +15,18 @@ export interface Verse {
   trokees: Trokee[];
   syllableCount: number;
   tokens: TrokeeToken[];
+  startOffset: number;
+  endOffset: number;
 }
 
 export interface TrokeeSyllable extends SyllableToken {
   errors: SyllableError[];
 }
 
-export default function parseVerse(tokens: Token[]): Verse {
+function parseVerse(tokens: TrokeeToken[], startOffset: number, endOffset: number): Verse {
   const trokees: Trokee[] = [];
-  const trokeeTokens = tokens.map((token) =>
-    token.type === 'fill'
-      ? token
-      : {
-          ...token,
-          errors: [],
-        },
-  );
-  for (let tokenIdx = trokeeTokens.length - 1; tokenIdx >= 0; tokenIdx -= 1) {
-    const token = trokeeTokens[tokenIdx];
+  for (let tokenIdx = tokens.length - 1; tokenIdx >= 0; tokenIdx -= 1) {
+    const token = tokens[tokenIdx];
     let [trokee] = trokees;
     if (!trokee || (token.type === 'syllable' && trokee.syllables.length >= 2 && trokees.length < 4)) {
       trokee = { syllables: [], tokens: [] };
@@ -79,5 +73,37 @@ export default function parseVerse(tokens: Token[]): Verse {
       }
     });
   });
-  return { trokees, syllableCount, tokens: trokeeTokens };
+  return { trokees, syllableCount, tokens, startOffset, endOffset };
+}
+
+export default function parseVerses(tokens: Token[]): Verse[] {
+  const verses: Verse[] = [];
+  let verseTokens: TrokeeToken[] = [];
+  let verseStartOffset = 0;
+  for (let tokenIdx = 0; tokenIdx <= tokens.length; tokenIdx += 1) {
+    const token = tokens[tokenIdx];
+    if (!token) {
+      // The last verse
+      const lastToken = verseTokens[verseTokens.length - 1];
+      const verseEndOffset = lastToken ? lastToken.offset + lastToken.text.length : verseStartOffset;
+      verses.push(parseVerse(verseTokens, verseStartOffset, verseEndOffset));
+    } else if (token.type === 'newline') {
+      // Verse before newline
+      const verseEndOffset = token.offset;
+      verses.push(parseVerse(verseTokens, verseStartOffset, verseEndOffset));
+      verseStartOffset = verseEndOffset + token.text.length;
+      verseTokens = [];
+    } else {
+      // Continue a verse
+      verseTokens.push(
+        token.type === 'fill'
+          ? token
+          : {
+              ...token,
+              errors: [],
+            },
+      );
+    }
+  }
+  return verses;
 }

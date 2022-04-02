@@ -5,7 +5,7 @@ import hyphenateText from '../finnish/hyphenateText';
 import isInvalidVerse from '../verses/isInvalidVerse';
 import isTooLongVerse from '../verses/isTooLongVerse';
 import isTooShortVerse from '../verses/isTooShortVerse';
-import parseVerse, { TrokeeSyllable, TrokeeToken, Verse } from '../verses/parseVerse';
+import parseVerses, { TrokeeSyllable, TrokeeToken, Verse } from '../verses/parseVerses';
 import styles from './PoemEditor.module.css';
 import Textarea, { Selection } from './Textarea';
 import VerseGuidance from './VerseGuidance';
@@ -26,9 +26,14 @@ function getTokenEndOffset(token: TrokeeToken): number {
   return token.offset + token.text.length;
 }
 
-function getCurrentVerseAndToken(caretOffset: number | null, verses: Verse[]): [Verse | null, TrokeeToken | null] {
+function getCurrentVerse(caretOffset: number | null, verses: Verse[]): Verse | null {
+  if (caretOffset == null) return null;
+  return verses.find((verse) => verse.startOffset <= caretOffset && caretOffset <= verse.endOffset) ?? null;
+}
+
+function getCurrentToken(caretOffset: number | null, verses: Verse[]): TrokeeToken | null {
   if (caretOffset == null) {
-    return [null, null];
+    return null;
   }
   for (const verse of verses) {
     const { tokens } = verse;
@@ -37,16 +42,16 @@ function getCurrentVerseAndToken(caretOffset: number | null, verses: Verse[]): [
     );
     const currentToken = errorToken || tokens.find((token) => caretOffset <= getTokenEndOffset(token));
     if (currentToken) {
-      return [verse, currentToken];
+      return currentToken;
     }
   }
-  return [null, null];
+  return null;
 }
 
 function PoemEditor({ content, onChange }: PoemEditorProps) {
   const [caretOffset, setCaretOffset] = useState<number | null>(null);
   const hyphenation = hyphenateText(content);
-  const verses = hyphenation.map(parseVerse);
+  const verses = parseVerses(hyphenation);
   const onTextareaChange = useCallback(
     (value: string, selection: Selection | null) => {
       onChange(value);
@@ -54,7 +59,8 @@ function PoemEditor({ content, onChange }: PoemEditorProps) {
     },
     [onChange],
   );
-  const [currentVerse, currentToken] = getCurrentVerseAndToken(caretOffset, verses);
+  const currentVerse = getCurrentVerse(caretOffset, verses);
+  const currentToken = getCurrentToken(caretOffset, verses);
 
   const editor = (
     <div className={styles.scrollView}>

@@ -19,13 +19,22 @@ export interface SyllableToken {
   endsWord: boolean;
 }
 
-export type Token = FillToken | SyllableToken;
+export interface NewlineToken {
+  type: 'newline';
+  text: '\n';
+  row: number;
+  column: number;
+  offset: number;
+}
 
-export default function hyphenateText(text: string): Token[][] {
+export type Token = FillToken | SyllableToken | NewlineToken;
+
+export default function hyphenateText(text: string): Token[] {
+  const tokens: Token[] = [];
   const rows = text.split('\n');
   let offset = 0;
-  return rows.map((rowText, rowIndex) => {
-    const tokens: Token[] = [];
+  const lastRowIndex = rows.length - 1;
+  rows.forEach((rowText, rowIndex) => {
     const tokenTexts = rowText.split(/(\p{L}+(?:[-']\p{L}+)*)/gu);
     let column = 0;
     tokenTexts.forEach((tokenText, tokenIndex) => {
@@ -62,7 +71,16 @@ export default function hyphenateText(text: string): Token[][] {
       column += tokenText.length;
       offset += tokenText.length;
     });
-    offset += 1;
-    return tokens;
+    if (rowIndex < lastRowIndex) {
+      tokens.push({
+        type: 'newline',
+        text: '\n',
+        row: rowIndex,
+        column,
+        offset,
+      });
+      offset += 1;
+    }
   });
+  return tokens;
 }
