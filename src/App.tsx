@@ -14,6 +14,10 @@ function App() {
   return (
     <Layout>
       <h1 className={styles.heading}>Kalevalamitta</h1>
+      <p className={styles.intro}>
+        Runos alle kirjottele, säkeitäsi raapustele. Muokkain tekstin tarkistavi, tavutukset näyttelevi, säännöissä
+        opastelevi, vioista osoittelevi.
+      </p>
       <PoemEditor content={poem} onChange={setPoem} />
     </Layout>
   );
