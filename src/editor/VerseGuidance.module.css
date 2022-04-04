@@ -2,7 +2,7 @@
   margin: 0.4em 0.5em;
   font-size: 1rem;
   line-height: 1.2em;
-  height: 6em;
+  min-height: 4em;
 }
 .paragraph {
   margin: 0;

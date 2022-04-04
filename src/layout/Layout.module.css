@@ -96,7 +96,7 @@ body {
 }
 .scrollMiddleTop,
 .scrollMiddleBottom {
-  height: 2rem;
+  height: 1rem;
   background-color: scrollShadowColor;
 }
 .scrollMiddleTop::after,
