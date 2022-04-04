@@ -16,7 +16,7 @@ interface PoemEditorProps {
   onChange: (content: string) => void;
 }
 
-const baseLetterSpacing = 0.3;
+const baseLetterSpacing = 0.2;
 
 function isErrorToken(token: TrokeeToken): token is TrokeeSyllable {
   return token.type === 'syllable' && token.errors.length > 0;

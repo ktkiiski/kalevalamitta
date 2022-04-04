@@ -9,13 +9,12 @@
 .editor {
   position: relative;
   overflow: visible;
-  font-size: 2rem;
-  line-height: 3.5rem;
+  font-size: 1.2rem;
+  line-height: 1.8em;
   flex-grow: 1;
 }
 .textarea,
 .highlighting {
-  min-height: 200px;
   box-sizing: border-box;
   font-family: inherit;
   font-weight: inherit;
@@ -43,6 +42,10 @@
   caret-color: black;
   outline: none;
   cursor: pointer;
+}
+.textarea::selection {
+  color: rgba(0, 0, 0, 0);
+  background-color: rgba(100, 150, 255, 0.4);
 }
 .textarea,
 .row {
