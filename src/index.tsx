@@ -1,8 +1,9 @@
 import React from 'react';
 import { hydrate, render } from 'react-dom';
-import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import 'normalize.css/normalize.css';
+import './index.css';
 
 function renderApp(element: JSX.Element, rootElement: HTMLElement) {
   if (rootElement.hasChildNodes()) {
