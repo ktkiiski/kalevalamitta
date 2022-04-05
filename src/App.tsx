@@ -1,7 +1,7 @@
-import { useState } from 'react';
 import styles from './App.module.css';
 import PoemEditor from './editor/PoemEditor';
 import Layout from './layout/Layout';
+import useLocalState from './utils/useLocalState';
 
 const initialPoem = `Mieleni minun tekevi,
 Aivoni ajattelevi
@@ -9,7 +9,7 @@ Lähteäni laulamahan
 Saa'ani sanelemahan.`;
 
 function App() {
-  const [poem, setPoem] = useState(initialPoem);
+  const [poem, setPoem] = useLocalState<string>('poem', initialPoem);
 
   return (
     <Layout>
