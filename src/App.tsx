@@ -1,6 +1,7 @@
 import styles from './App.module.css';
 import PoemEditor from './editor/PoemEditor';
-import Layout from './layout/Layout';
+import buttonStyles from './ui/Button.module.css';
+import Layout from './ui/Layout';
 import useLocalState from './utils/useLocalState';
 
 const initialPoem = `Mieleni minun tekevi,
@@ -18,6 +19,22 @@ function App() {
         Runos alle kirjottele, säkeitäsi raapustele. Muokkain tekstin tarkistavi, tavutukset näyttelevi, säännöissä
         opastelevi, vioista osoittelevi.
       </p>
+      <div className={styles.buttons}>
+        <a
+          href="http://www.karuse.info/index.php?option=com_content&view=article&id=8&Itemid=19"
+          target="_blank"
+          rel="nofollow noreferrer"
+          className={buttonStyles.button}
+        >
+          Säännöt kertovi
+        </a>
+        <button type="button" className={buttonStyles.button} onClick={() => setPoem('')}>
+          Alusta aloittavi
+        </button>
+        <button type="button" className={buttonStyles.button} onClick={() => setPoem(initialPoem)}>
+          Mallia kaipavi
+        </button>
+      </div>
       <PoemEditor content={poem} onChange={setPoem} />
     </Layout>
   );

@@ -7,3 +7,14 @@
 .intro {
   font-size: 1rem;
 }
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.buttons > * {
+  flex-grow: 1;
+}

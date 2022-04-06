@@ -13,7 +13,7 @@ body {
 .page {
   display: grid;
   grid-template-columns: minmax(1rem, 1fr) minmax(auto, 600px) minmax(1rem, 1fr);
-  grid-template-rows: minmax(1rem, 1fr) auto minmax(1rem, 1fr);
+  grid-template-rows: 2rem auto minmax(2rem, 1fr);
   width: 100%;
   min-height: 100vh;
   overflow: hidden;
@@ -24,6 +24,7 @@ body {
   z-index: 1;
   position: relative;
   overflow: hidden;
+  color: black;
 }
 .scroll::before,
 .scroll::after {
