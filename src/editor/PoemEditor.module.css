@@ -111,8 +111,15 @@
   text-align: center;
   letter-spacing: 0;
 }
-.errorToken {
-  background-color: red;
+.errorToken::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 0, 0, 0.8);
+  transform: skewX(-15deg);
 }
 .hyphened {
   position: relative;
