@@ -116,7 +116,7 @@ function PoemEditor({ content, onChange }: PoemEditorProps) {
           value={content}
           onChange={onTextareaChange}
           className={styles.textarea}
-          placeholder="Kirjoita tähän…"
+          placeholder="Tähän voipi kirjoitella…"
         />
       </div>
     </div>

@@ -4,13 +4,13 @@ import buttonStyles from './ui/Button.module.css';
 import Layout from './ui/Layout';
 import useLocalState from './utils/useLocalState';
 
-const initialPoem = `Mieleni minun tekevi,
+const examplePoem = `Mieleni minun tekevi,
 Aivoni ajattelevi
 Lähteäni laulamahan
 Saa'ani sanelemahan.`;
 
 function App() {
-  const [poem, setPoem] = useLocalState<string>('poem', initialPoem);
+  const [poem, setPoem] = useLocalState<string>('poem', '');
 
   return (
     <Layout>
@@ -31,7 +31,7 @@ function App() {
         <button type="button" className={buttonStyles.button} onClick={() => setPoem('')}>
           Alusta aloittavi
         </button>
-        <button type="button" className={buttonStyles.button} onClick={() => setPoem(initialPoem)}>
+        <button type="button" className={buttonStyles.button} onClick={() => setPoem(examplePoem)}>
           Mallia kaipavi
         </button>
       </div>
