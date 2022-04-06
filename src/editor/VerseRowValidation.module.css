@@ -10,13 +10,3 @@
   height: 1em;
   margin-right: 0.2em;
 }
-.short {
-  color: #666;
-}
-.error,
-.long {
-  color: #aa0000;
-}
-.valid {
-  color: #007c00;
-}

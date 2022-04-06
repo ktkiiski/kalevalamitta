@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import validationStyles from '../ui/Validation.module.css';
 import isInvalidVerse from '../verses/isInvalidVerse';
 import isTooLongVerse from '../verses/isTooLongVerse';
 import isTooShortVerse from '../verses/isTooShortVerse';
@@ -21,18 +22,22 @@ function VerseRowValidation({ className, verse }: VerseValidationProps) {
   const isTooLong = isTooLongVerse(verse);
   const isInvalid = isInvalidVerse(verse);
   if (isTooShort) {
-    return <span className={classNames(className, styles.container, styles.short)}>{`${syllableCount}/8`}</span>;
+    return (
+      <span className={classNames(className, styles.container, validationStyles.short)}>{`${syllableCount}/8`}</span>
+    );
   }
   if (isTooLong || isInvalid) {
     return (
-      <span className={classNames(className, styles.container, isTooLong ? styles.long : styles.error)}>
+      <span
+        className={classNames(className, styles.container, isTooLong ? validationStyles.long : validationStyles.error)}
+      >
         <WarningIcon className={styles.icon} />
         {isTooLong && syllableCount}
       </span>
     );
   }
   return (
-    <span className={classNames(className, styles.container, styles.valid)}>
+    <span className={classNames(className, styles.container, validationStyles.valid)}>
       <OkIcon className={styles.icon} />
     </span>
   );

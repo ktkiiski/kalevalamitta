@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import validationStyles from '../ui/Validation.module.css';
 import getVerseErrors from '../verses/getVerseErrors';
 import isTooLongVerse from '../verses/isTooLongVerse';
 import isTooShortVerse from '../verses/isTooShortVerse';
@@ -42,14 +43,14 @@ function VerseGuidance({ verse, token }: VerseGuidanceProps) {
   }
   if (!verse.syllableCount) {
     return (
-      <div className={classNames(styles.container, styles.short)}>
+      <div className={classNames(styles.container, validationStyles.short)}>
         Kirjoita säe, jossa on yhteensä 8 tavua tai toisinaan 9.
       </div>
     );
   }
   if (isTooShortVerse(verse)) {
     return (
-      <div className={classNames(styles.container, styles.short)}>
+      <div className={classNames(styles.container, validationStyles.short)}>
         Säkeessä tulee olla 8 tai toisinaan 9 tavua. Kirjoita vielä{' '}
         {pluralize(8 - verse.syllableCount, 'tavu', 'tavua')}.
       </div>
@@ -57,7 +58,7 @@ function VerseGuidance({ verse, token }: VerseGuidanceProps) {
   }
   if (isTooLongVerse(verse)) {
     return (
-      <div className={classNames(styles.container, styles.long)}>
+      <div className={classNames(styles.container, validationStyles.long)}>
         Säkeessä saisi olla enintään 9 tavua, mieluiten 8.{' '}
         <strong>Poista ainakin {pluralize(verse.syllableCount - 9, 'tavu', 'tavua')}.</strong>
       </div>
@@ -67,7 +68,7 @@ function VerseGuidance({ verse, token }: VerseGuidanceProps) {
   const syllableErrors = token?.type === 'syllable' ? token.errors : [];
   if (errors.length) {
     return (
-      <div className={classNames(styles.container, styles.error)}>
+      <div className={classNames(styles.container, validationStyles.error)}>
         {possibleErrors.map((error) =>
           !errors.includes(error) ? null : (
             <p key={error} className={classNames(styles.paragraph, syllableErrors.includes(error) && styles.strong)}>
@@ -79,9 +80,8 @@ function VerseGuidance({ verse, token }: VerseGuidanceProps) {
     );
   }
   return (
-    <div className={classNames(styles.container, styles.valid)}>
-      Säe näyttää hyvälle! Kirjoitathan yhdyssanat erikseen, sillä niihin sovelletaan sääntöjä kuin ne olisivat
-      erilliset sanat. <strong>Aloita uusi säe seuraavalta riviltä!</strong>
+    <div className={classNames(styles.container, validationStyles.valid)}>
+      Säe näyttää hyvälle! Kirjoitathan yhdyssanat erikseen. Aloita uusi säe seuraavalta riviltä!
     </div>
   );
 }

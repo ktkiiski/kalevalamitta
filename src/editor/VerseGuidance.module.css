@@ -3,21 +3,10 @@
   font-size: 1rem;
   line-height: 1.2em;
   min-height: 4em;
+  text-align: center;
 }
 .paragraph {
   margin: 0;
-}
-.short {
-  composes: short from './VerseRowValidation.module.css';
-}
-.long {
-  composes: long from './VerseRowValidation.module.css';
-}
-.valid {
-  composes: valid from './VerseRowValidation.module.css';
-}
-.error {
-  composes: error from './VerseRowValidation.module.css';
 }
 .strong {
   font-weight: bold;

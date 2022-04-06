@@ -1,0 +1,10 @@
+.short {
+  color: #444;
+}
+.error,
+.long {
+  color: #aa0000;
+}
+.valid {
+  color: #007c00;
+}
