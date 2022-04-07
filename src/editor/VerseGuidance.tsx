@@ -7,13 +7,30 @@ import { SyllableError, TrokeeToken, Verse } from '../verses/parseVerses';
 import styles from './VerseGuidance.module.css';
 
 const possibleErrors: SyllableError[] = ['A', 'B', '2', '3', '4'];
+const syllableHelpUrl = 'https://fl.finnlectura.fi/verkkosuomi/Fonologia/sivu183.htm#Lyhyet%20ja%20pitk%C3%A4t%20tavut';
 
 function renderError(error: SyllableError) {
   switch (error) {
     case 'A':
-      return 'Jos sanan ensitavu osuu runojalan (trokeen) alkuun eli nousuun, sen on oltava pitkä. Ensimmäisessä runojalassa tavujen pituudella ei kuitenkaan ole väliä.';
+      return (
+        <>
+          Jos sanan ensitavu osuu runojalan (trokeen) alkuun eli nousuun, sen on oltava{' '}
+          <a href={syllableHelpUrl} target="_blank" rel="nofollow noreferrer">
+            pitkä
+          </a>
+          . Ensimmäisessä runojalassa tavujen pituudella ei kuitenkaan ole väliä.
+        </>
+      );
     case 'B':
-      return 'Jos sanan ensitavu osuu runojalan (trokeen) loppuun eli laskuun, sen on oltava lyhyt.';
+      return (
+        <>
+          Jos sanan ensitavu osuu runojalan (trokeen) loppuun eli laskuun, sen on oltava{' '}
+          <a href={syllableHelpUrl} target="_blank" rel="nofollow noreferrer">
+            lyhyt
+          </a>
+          .
+        </>
+      );
     case '2':
       return 'Yksitavuinen sana voi sijoittua säkeessä mihin tahansa, mutta ei sen loppuun.';
     case '3':
@@ -71,9 +88,9 @@ function VerseGuidance({ verse, token }: VerseGuidanceProps) {
       <div className={classNames(styles.container, validationStyles.error)}>
         {possibleErrors.map((error) =>
           !errors.includes(error) ? null : (
-            <p key={error} className={classNames(styles.paragraph, syllableErrors.includes(error) && styles.strong)}>
-              {renderError(error)}
-            </p>
+            <span key={error} className={classNames(styles.paragraph, syllableErrors.includes(error) && styles.strong)}>
+              {renderError(error)}{' '}
+            </span>
           ),
         )}
       </div>

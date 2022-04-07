@@ -5,6 +5,14 @@
   min-height: 2.4em;
   text-align: center;
 }
+.container a {
+  color: #559;
+  font-weight: inherit;
+  text-decoration: underline;
+}
+.container a:hover {
+  color: black;
+}
 .paragraph {
   margin: 0;
 }
