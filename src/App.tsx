@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import styles from './App.module.css';
 import PoemEditor from './editor/PoemEditor';
 import buttonStyles from './ui/Button.module.css';
@@ -14,6 +14,11 @@ Saa'ani sanelemahan.`;
 function App() {
   const [poem, setPoem] = useLocalState<string>('poem', '');
   const editorRef = useRef<Focusable>();
+
+  useEffect(() => {
+    // Auto-focus the editor
+    editorRef.current!.focus();
+  }, []);
 
   const onResetPoem = () => {
     setPoem('');
