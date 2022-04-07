@@ -25,6 +25,8 @@ body {
   position: relative;
   overflow: hidden;
   color: black;
+  margin: 0 -0.5em;
+  padding: 0 0.5em;
 }
 .scroll::before,
 .scroll::after {
