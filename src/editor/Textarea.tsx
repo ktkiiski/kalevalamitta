@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react';
+import { forwardRef, useEffect, useRef } from 'react';
+import useImperativeFocusHandle, { Focusable } from '../utils/useImperativeFocusHandle';
 
 export interface Selection {
   start: number;
@@ -23,8 +24,10 @@ function getSelection(element: HTMLTextAreaElement): Selection | null {
   return { start: selectionStart, end: selectionEnd };
 }
 
-function Textarea({ value, onChange, ...props }: TextareaProps) {
+const Textarea = forwardRef<Focusable | undefined, TextareaProps>(({ value, onChange, ...props }, ref) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useImperativeFocusHandle(ref, textareaRef);
 
   useEffect(() => {
     function onSelectionChange() {
@@ -48,6 +51,6 @@ function Textarea({ value, onChange, ...props }: TextareaProps) {
       {...props}
     />
   );
-}
+});
 
 export default Textarea;

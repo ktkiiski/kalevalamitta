@@ -1,7 +1,8 @@
 /* eslint-disable react/no-array-index-key */
 import classNames from 'classnames';
-import { useCallback, useState } from 'react';
+import { forwardRef, useCallback, useState } from 'react';
 import hyphenateText from '../finnish/hyphenateText';
+import { Focusable } from '../utils/useImperativeFocusHandle';
 import isInvalidVerse from '../verses/isInvalidVerse';
 import isTooLongVerse from '../verses/isTooLongVerse';
 import isTooShortVerse from '../verses/isTooShortVerse';
@@ -48,7 +49,7 @@ function getCurrentToken(caretOffset: number | null, verses: Verse[]): TrokeeTok
   return null;
 }
 
-function PoemEditor({ content, onChange }: PoemEditorProps) {
+const PoemEditor = forwardRef<Focusable | undefined, PoemEditorProps>(({ content, onChange }, ref) => {
   const [caretOffset, setCaretOffset] = useState<number | null>(null);
   const hyphenation = hyphenateText(content);
   const verses = parseVerses(hyphenation);
@@ -113,6 +114,7 @@ function PoemEditor({ content, onChange }: PoemEditorProps) {
           })}
         </div>
         <Textarea
+          ref={ref}
           value={content}
           onChange={onTextareaChange}
           className={styles.textarea}
@@ -127,6 +129,6 @@ function PoemEditor({ content, onChange }: PoemEditorProps) {
       <VerseGuidance verse={currentVerse} token={currentToken} />
     </div>
   );
-}
+});
 
 export default PoemEditor;

@@ -1,7 +1,9 @@
+import { useRef } from 'react';
 import styles from './App.module.css';
 import PoemEditor from './editor/PoemEditor';
 import buttonStyles from './ui/Button.module.css';
 import Layout from './ui/Layout';
+import { Focusable } from './utils/useImperativeFocusHandle';
 import useLocalState from './utils/useLocalState';
 
 const examplePoem = `Mieleni minun tekevi,
@@ -11,6 +13,17 @@ Saa'ani sanelemahan.`;
 
 function App() {
   const [poem, setPoem] = useLocalState<string>('poem', '');
+  const editorRef = useRef<Focusable>();
+
+  const onResetPoem = () => {
+    setPoem('');
+    editorRef.current!.focus();
+  };
+
+  const onSetExamplePoem = () => {
+    setPoem(examplePoem);
+    editorRef.current!.focus();
+  };
 
   return (
     <Layout>
@@ -28,14 +41,14 @@ function App() {
         >
           Säännöt kertovi
         </a>
-        <button type="button" className={buttonStyles.button} onClick={() => setPoem('')}>
+        <button type="button" className={buttonStyles.button} onClick={onResetPoem}>
           Alusta aloittavi
         </button>
-        <button type="button" className={buttonStyles.button} onClick={() => setPoem(examplePoem)}>
+        <button type="button" className={buttonStyles.button} onClick={onSetExamplePoem}>
           Mallia kaipavi
         </button>
       </div>
-      <PoemEditor content={poem} onChange={setPoem} />
+      <PoemEditor content={poem} onChange={setPoem} ref={editorRef} />
     </Layout>
   );
 }
