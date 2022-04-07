@@ -1,9 +1,9 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 function readValue(key: string): unknown {
   try {
     const item = localStorage.getItem(key);
-    return item != null ? JSON.parse(item) : item;
+    return item ? JSON.parse(item) : null;
   } catch {
     return undefined;
   }
@@ -18,7 +18,7 @@ function writeValue(key: string, value: unknown) {
 }
 
 export default function useLocalState<T = unknown>(key: string, defaultValue: T): [T, (newValue: T) => void] {
-  const [cachedValue, setCachedValue] = useState<T>(() => readValue(key) as T);
+  const [cachedValue, setCachedValue] = useState<T>(defaultValue);
   const setValue = useCallback(
     (newValue: T) => {
       setCachedValue(newValue);
@@ -26,5 +26,12 @@ export default function useLocalState<T = unknown>(key: string, defaultValue: T)
     },
     [key],
   );
+
+  // Because of pre-rendering, load the state from storage on effect
+  useEffect(() => {
+    const storedValue = readValue(key) as T;
+    setCachedValue(storedValue);
+  }, [key]);
+
   return [cachedValue ?? defaultValue, setValue];
 }
