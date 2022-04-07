@@ -3,9 +3,10 @@ import styles from './Layout.module.css';
 
 interface LayoutProps {
   children: ReactNode;
+  footer: ReactNode;
 }
 
-function Layout({ children }: LayoutProps) {
+function Layout({ children, footer }: LayoutProps) {
   return (
     <div className={styles.page}>
       <div className={styles.scroll}>
@@ -19,6 +20,7 @@ function Layout({ children }: LayoutProps) {
         </div>
         <div className={styles.scrollBottom}>
           <div className={styles.scrollEndShade} />
+          <div className={styles.footer}>{footer}</div>
         </div>
       </div>
       <div className={styles.shadowRight} />

@@ -31,7 +31,13 @@ function App() {
   };
 
   return (
-    <Layout>
+    <Layout
+      footer={
+        <a href="https://github.com/ktkiiski/kalevalamitta" target="_blank" rel="nofollow noreferrer">
+          © 2022 Kimmo Kiiski
+        </a>
+      }
+    >
       <h1 className={styles.heading}>Kalevalamitta</h1>
       <p className={styles.intro}>
         Runos alle kirjottele, säkeitäsi raapustele. Muokkain tekstin tarkistavi, tavutukset näyttelevi, säännöissä
