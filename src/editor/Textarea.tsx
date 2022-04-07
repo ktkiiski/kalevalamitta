@@ -8,15 +8,12 @@ export interface Selection {
 
 interface TextareaProps {
   value: string;
-  onChange: (value: string, selection: Selection | null) => void;
+  onChange: (value: string, selection: Selection) => void;
   placeholder?: string;
   className?: string;
 }
 
-function getSelection(element: HTMLTextAreaElement): Selection | null {
-  if (document.activeElement !== element) {
-    return null;
-  }
+function getSelection(element: HTMLTextAreaElement): Selection {
   const { selectionDirection, selectionEnd, selectionStart } = element;
   if (selectionDirection === 'backward') {
     return { start: selectionEnd, end: selectionStart };

@@ -50,13 +50,13 @@ function getCurrentToken(caretOffset: number | null, verses: Verse[]): TrokeeTok
 }
 
 const PoemEditor = forwardRef<Focusable | undefined, PoemEditorProps>(({ content, onChange }, ref) => {
-  const [caretOffset, setCaretOffset] = useState<number | null>(null);
+  const [caretOffset, setCaretOffset] = useState<number>(0);
   const hyphenation = hyphenateText(content);
   const verses = parseVerses(hyphenation);
   const onTextareaChange = useCallback(
-    (value: string, selection: Selection | null) => {
+    (value: string, selection: Selection) => {
       onChange(value);
-      setCaretOffset(selection?.end ?? null);
+      setCaretOffset(selection.end);
     },
     [onChange],
   );
