@@ -2,6 +2,10 @@
 
 This is a editor and validator website for poems that follow the Finnish ["kalevalamitta"](https://fi.wikipedia.org/wiki/Kalevalamitta) rules.
 
+**See it in action at [kalevalamitta.fi](https://www.kalevalamitta.fi)**
+
+<img alt="Screenshot" src="./screenshot.png" style="max-width:100%;width:509px">
+
 ## Development
 
 In the project directory, you can run:
