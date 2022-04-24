@@ -33,7 +33,7 @@ function App() {
   return (
     <Layout
       footer={
-        <a href="https://github.com/ktkiiski/kalevalamitta" target="_blank" rel="nofollow noreferrer">
+        <a href="https://github.com/ktkiiski/kalevalamitta" target="_blank" rel="noreferrer">
           © 2022 Kimmo Kiiski
         </a>
       }
@@ -47,7 +47,7 @@ function App() {
         <a
           href="http://www.karuse.info/index.php?option=com_content&view=article&id=8&Itemid=19"
           target="_blank"
-          rel="nofollow noreferrer"
+          rel="noreferrer"
           className={buttonStyles.button}
         >
           Säännöt kertovi

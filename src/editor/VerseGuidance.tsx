@@ -15,7 +15,7 @@ function renderError(error: SyllableError) {
       return (
         <>
           Jos sanan ensitavu osuu runojalan (trokeen) alkuun eli nousuun, sen on oltava{' '}
-          <a href={syllableHelpUrl} target="_blank" rel="nofollow noreferrer">
+          <a href={syllableHelpUrl} target="_blank" rel="noreferrer">
             pitkä
           </a>
           . Ensimmäisessä runojalassa tavujen pituudella ei kuitenkaan ole väliä.
@@ -25,7 +25,7 @@ function renderError(error: SyllableError) {
       return (
         <>
           Jos sanan ensitavu osuu runojalan (trokeen) loppuun eli laskuun, sen on oltava{' '}
-          <a href={syllableHelpUrl} target="_blank" rel="nofollow noreferrer">
+          <a href={syllableHelpUrl} target="_blank" rel="noreferrer">
             lyhyt
           </a>
           .
