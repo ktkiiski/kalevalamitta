@@ -13,7 +13,7 @@ Saa'ani sanelemahan.`;
 
 function App() {
   const [poem, setPoem] = useLocalState<string>('poem', '');
-  const editorRef = useRef<Focusable>();
+  const editorRef = useRef<Focusable>(null);
 
   useEffect(() => {
     // Auto-focus the editor

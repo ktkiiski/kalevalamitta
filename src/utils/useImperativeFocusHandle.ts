@@ -6,7 +6,7 @@ export interface Focusable {
 
 export default function useImperativeFocusHandle(
   ref: Ref<Focusable | undefined>,
-  textareaRef: RefObject<HTMLTextAreaElement>,
+  textareaRef: RefObject<HTMLTextAreaElement | null>,
 ) {
   useImperativeHandle(
     ref,
