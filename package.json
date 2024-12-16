@@ -15,7 +15,9 @@
   },
   "scripts": {
     "start": "vite",
-    "build": "vite build",
+    "build": "npm run build:client && npm run build:prerenderer",
+    "build:client": "vite build --outDir dist/client",
+    "build:prerenderer": "vite build --outDir dist/prerenderer --ssr src/prerenderer.ts && node lib/prerender.mjs",
     "preview": "vite preview",
     "test": "vitest",
     "lint": "tsc --noEmit && eslint . --ext .ts,.tsx && prettier --check .",
