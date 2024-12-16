@@ -4,9 +4,9 @@ import isInvalidVerse from '../verses/isInvalidVerse';
 import isTooLongVerse from '../verses/isTooLongVerse';
 import isTooShortVerse from '../verses/isTooShortVerse';
 import { Verse } from '../verses/parseVerses';
+import OkIcon from './OkIcon';
 import styles from './VerseRowValidation.module.css';
-import { ReactComponent as OkIcon } from './images/ok.svg';
-import { ReactComponent as WarningIcon } from './images/warning.svg';
+import WarningIcon from './WarningIcon';
 
 interface VerseValidationProps {
   className?: string;

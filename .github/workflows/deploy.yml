@@ -6,6 +6,9 @@ on:
       - master
   workflow_dispatch:
 
+env:
+  VITE_GOOGLE_ANALYTICS_ID: ${{ vars.VITE_GOOGLE_ANALYTICS_ID }}
+
 permissions:
   contents: read
   pages: write
@@ -40,7 +43,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './build'
+          path: './dist'
 
       - name: Deploy to GitHub Pages
         id: deployment

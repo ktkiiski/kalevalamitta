@@ -18,7 +18,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-To enable Google Analytics, provide `REACT_APP_GOOGLE_ANALYTICS_ID` environment variable.
+To enable Google Analytics, provide `VITE_GOOGLE_ANALYTICS_ID` environment variable.
 
 ### `npm test`
 
@@ -35,7 +35,7 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-To enable Google Analytics, provide `REACT_APP_GOOGLE_ANALYTICS_ID` environment variable.
+To enable Google Analytics, provide `VITE_GOOGLE_ANALYTICS_ID` environment variable.
 
 ### `npm run eject`
 
