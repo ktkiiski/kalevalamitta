@@ -1,3 +1,4 @@
+import { describe, test, expect } from 'vitest';
 import hyphenateText, { Token } from '../finnish/hyphenateText';
 import parseVerses from './parseVerses';
 
